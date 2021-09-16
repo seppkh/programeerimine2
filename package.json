@@ -1,0 +1,32 @@
+{
+  "name": "programeerimine2",
+  "version": "1.0.0",
+  "description": "Programmeerimine II projektid 2021/2022",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seppkh/programeerimine2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seppkh/programeerimine2/issues"
+  },
+  "homepage": "https://github.com/seppkh/programeerimine2#readme",
+  "dependencies": {
+    "@types/express": "^4.17.13",
+    "express": "^4.17.1",
+    "typescript": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^16.9.1",
+    "nodemon": "^2.0.12",
+    "ts-node": "^10.2.1"
+  }
+}
