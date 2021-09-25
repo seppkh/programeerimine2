@@ -144,7 +144,7 @@ Endpoints for viewing and manipulating Lessons.
         "id": 1,
         "name": "Mari Kuli"
     },
-    "room_id": {
+    "room": {
         "id": 2,
         "name": "Auditoorium 307"
     },

@@ -481,7 +481,7 @@ app.get('/lessons/:id', (req: Request, res: Response) => {
         course: course,
         subject: subject,
         teacher: teacher,
-        room_id: room,
+        room: room,
         comment: comment
     }); 
 });
