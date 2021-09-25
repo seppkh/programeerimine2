@@ -10,16 +10,17 @@ Lesson's information consists of start_time, end_time, course_id, subject_id, te
 
 Open endpoints require no Authentication.
 
-### Courses related
+## Courses related
 Endpoints for viewing and manipulating Courses.
 
 | Action | Endpoint |
-| --- | --- |
+| ---- | ---- |
 | Show all courses | `GET /courses` |
 | Show a selected course | `GET /courses/:id` |
 | Add a course | `POST /courses` |
-| Update a course | `PUT /courses/:id` |
-| Delete a course | `DELETE /courses/:id` |
+| Update a selected course | `PUT /courses/:id` |
+| Delete a selected course | `DELETE /courses/:id` |
+
 
 **Data example**
 
@@ -33,16 +34,18 @@ Endpoints for viewing and manipulating Courses.
 }
 ```
 
-### Subjects related
+
+## Subjects related
 Endpoints for viewing and manipulating Subjects.
 
 | Action | Endpoint |
-| --- | --- |
+| ---- | ---- |
 | Show all subjects | `GET /subjects` |
 | Show a selected subject | `GET /subjects/:id` |
 | Add a subject | `POST /subjects` |
-| Update a subject | `PUT /subjects/:id` |
-| Delete a subject | `DELETE /subjects/:id` |
+| Update a selected subject | `PUT /subjects/:id` |
+| Delete a selected subject | `DELETE /subjects/:id` |
+
 
 **Data example**
 
@@ -57,16 +60,18 @@ Endpoints for viewing and manipulating Subjects.
 }
 ```
 
-### Teachers related
+
+## Teachers related
 Endpoints for viewing and manipulating Teachers.
 
 | Action | Endpoint |
-| --- | --- |
+| ---- | ---- |
 | Show all teachers | `GET /teachers` |
 | Show a selected teacher | `GET /teachers/:id` |
 | Add a teacher | `POST /teachers` |
-| Update a teacher | `PUT /teachers/:id` |
-| Delete a teacher | `DELETE /teachers/:id` |
+| Update a selected teacher | `PUT /teachers/:id` |
+| Delete a selected teacher | `DELETE /teachers/:id` |
+
 
 **Data example**
 
@@ -80,16 +85,18 @@ Endpoints for viewing and manipulating Teachers.
 }
 ```
 
-### Rooms related
+
+## Rooms related
 Endpoints for viewing and manipulating Rooms.
 
 | Action | Endpoint |
-| --- | --- |
+| ---- | ---- |
 | Show all rooms | `GET /rooms` |
 | Show a selected room | `GET /rooms/:id` |
 | Add a room | `POST /rooms` |
-| Update a room | `PUT /rooms/:id` |
-| Delete a room | `DELETE /rooms/:id` |
+| Update a selected room | `PUT /rooms/:id` |
+| Delete a selected room | `DELETE /rooms/:id` |
+
 
 **Data example**
 
@@ -103,16 +110,18 @@ Endpoints for viewing and manipulating Rooms.
 }
 ```
 
-### Lessons related
+
+## Lessons related
 Endpoints for viewing and manipulating Lessons.
 
 | Action | Endpoint |
-| --- | --- |
+| ---- | ---- |
 | Show all lessons | `GET /lessons` |
 | Show a selected lesson | `GET /lessons/:id` |
 | Add a lesson | `POST /lessons` |
-| Update a lesson | `PUT /lessons/:id` |
-| Delete a lesson | `DELETE /lessons/:id` |
+| Update a selected lesson | `PUT /lessons/:id` |
+| Delete a selected lesson | `DELETE /lessons/:id` |
+
 
 **Data example**
 
