@@ -13,7 +13,17 @@ Open endpoints require no Authentication.
 ### Courses related
 Endpoints for viewing and manipulating Courses.
 
+| Action | Endpoint |
+| --- | --- |
+| Show all courses | `GET /courses` |
+| Show a selected course | `GET /courses/:id` |
+| Add a course | `POST /courses` |
+| Update a course | `PUT /courses/:id` |
+| Delete a course | `DELETE /courses/:id` |
+
 **Data example**
+
+`GET /courses/1`
 ```json
 {
     "course": {
@@ -23,16 +33,20 @@ Endpoints for viewing and manipulating Courses.
 }
 ```
 
-* [Show all courses] : `GET /courses`
-* [Show a selected course] : `GET /courses/:id`
-* [Add a course] : `POST /courses`
-* [Update a course] : `PUT /courses/:id`
-* [Delete a course] : `DELETE /courses/:id`
-
 ### Subjects related
 Endpoints for viewing and manipulating Subjects.
 
+| Action | Endpoint |
+| --- | --- |
+| Show all subjects | `GET /subjects` |
+| Show a selected subject | `GET /subjects/:id` |
+| Add a subject | `POST /subjects` |
+| Update a subject | `PUT /subjects/:id` |
+| Delete a subject | `DELETE /subjects/:id` |
+
 **Data example**
+
+`GET /subjects/1`
 ```json
 {
     "subject": {
@@ -43,16 +57,20 @@ Endpoints for viewing and manipulating Subjects.
 }
 ```
 
-* [Show all subjects] : `GET /subjects`
-* [Show a selected subject] : `GET /subjects/:id`
-* [Add a subject] : `POST /subjects`
-* [Update a subject] : `PUT /subjects/:id`
-* [Delete a subject] : `DELETE /subjects/:id`
-
 ### Teachers related
 Endpoints for viewing and manipulating Teachers.
 
+| Action | Endpoint |
+| --- | --- |
+| Show all teachers | `GET /teachers` |
+| Show a selected teacher | `GET /teachers/:id` |
+| Add a teacher | `POST /teachers` |
+| Update a teacher | `PUT /teachers/:id` |
+| Delete a teacher | `DELETE /teachers/:id` |
+
 **Data example**
+
+`GET /teachers/1`
 ```json
 {
     "teacher": {
@@ -62,16 +80,20 @@ Endpoints for viewing and manipulating Teachers.
 }
 ```
 
-* [Show all teachers] : `GET /teachers`
-* [Show a selected teacher] : `GET /teachers/:id`
-* [Add a teacher] : `POST /teachers`
-* [Update a teacher] : `PUT /teachers/:id`
-* [Delete a teacher] : `DELETE /teachers/:id`
-
 ### Rooms related
 Endpoints for viewing and manipulating Rooms.
 
+| Action | Endpoint |
+| --- | --- |
+| Show all rooms | `GET /rooms` |
+| Show a selected room | `GET /rooms/:id` |
+| Add a room | `POST /rooms` |
+| Update a room | `PUT /rooms/:id` |
+| Delete a room | `DELETE /rooms/:id` |
+
 **Data example**
+
+`GET /rooms/1`
 ```json
 {
     "room": {
@@ -81,16 +103,20 @@ Endpoints for viewing and manipulating Rooms.
 }
 ```
 
-* [Show all rooms] : `GET /rooms`
-* [Show a selected room] : `GET /rooms/:id`
-* [Add a room] : `POST /rooms`
-* [Update a room] : `PUT /rooms/:id`
-* [Delete a room] : `DELETE /rooms/:id`
-
 ### Lessons related
 Endpoints for viewing and manipulating Lessons.
 
+| Action | Endpoint |
+| --- | --- |
+| Show all lessons | `GET /lessons` |
+| Show a selected lesson | `GET /lessons/:id` |
+| Add a lesson | `POST /lessons` |
+| Update a lesson | `PUT /lessons/:id` |
+| Delete a lesson | `DELETE /lessons/:id` |
+
 **Data example**
+
+`GET /lessons/1`
 ```json
 {
     "lesson": 1,
@@ -116,10 +142,3 @@ Endpoints for viewing and manipulating Lessons.
     "comment": "Eksam: suuline ja kirjalik osa"
 }
 ```
-
-* [Show all lessons] : `GET /lessons`
-* [Show a selected lesson] : `GET /lessons/:id`
-* [Add a lesson] : `POST /lessons`
-* [Update a lesson] : `PUT /lessons/:id`
-* [Delete a lesson] : `DELETE /lessons/:id`
-
