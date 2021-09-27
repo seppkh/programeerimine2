@@ -48,7 +48,7 @@ const db = {
         },
         {
             id: 2,
-            name: "Programmeerimine",
+            name: "Programmeerimine II",
             EAP: 3
         },
         {
@@ -86,6 +86,7 @@ const db = {
             id: 1,
             start_time: null,
             end_time: null,
+            duration: null,
             course_id: 2,
             subject_id: 1,
             teacher_id: 1,
@@ -96,6 +97,7 @@ const db = {
             id: 2,
             start_time: null,
             end_time: null,
+            duration: null,
             course_id: 2,
             subject_id: 3,
             teacher_id: 3,
@@ -424,6 +426,7 @@ app.get('/lessons', (req: Request, res: Response) => {
             const id = lesson_info?.id;
             const start_time = lesson_info?.start_time;
             const end_time = lesson_info?.end_time;
+            const duration = lesson_info?.duration;
             const course_id = lesson_info?.course_id;
             const subject_id = lesson_info?.subject_id;
             const teacher_id = lesson_info?.teacher_id;
@@ -439,6 +442,7 @@ app.get('/lessons', (req: Request, res: Response) => {
                 id: id,
                 start_time: start_time,
                 end_time: end_time,
+                duration: duration,
                 course: course,
                 subject: subject,
                 teacher: teacher,
@@ -457,6 +461,40 @@ app.get('/lessons', (req: Request, res: Response) => {
 
 app.get('/lessons/:id', (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id);
+    const lesson_info = db.lessons.find((element) => element.id === id);
+
+    const start_time = lesson_info?.start_time;
+    const end_time = lesson_info?.end_time;
+    const duration = lesson_info?.duration;
+    const course_id = lesson_info?.course_id;
+    const subject_id = lesson_info?.subject_id;
+    const teacher_id = lesson_info?.teacher_id;
+    const room_id = lesson_info?.room_id;
+    const comment = lesson_info?.comment;
+
+    const course = db.courses.find((element) => element.id === course_id);
+    const subject = db.subjects.find((element) => element.id === subject_id);
+    const teacher = db.teachers.find((element) => element.id === teacher_id);
+    const room = db.rooms.find((element) => element.id === room_id);
+
+    console.log(lesson_info);
+    
+    res.status(ok).json({
+        lesson: id,
+        start_time: start_time,
+        end_time: end_time,
+        duration: duration,
+        course: course,
+        subject: subject,
+        teacher: teacher,
+        room: room,
+        comment: comment
+    }); 
+});
+
+/* app.get('/lessons/:date', (req: Request, res: Response) => {
+    const date_raw: string = req.params.date;
+
     const lesson_info = db.lessons.find((element) => element.id === id);
 
     const start_time = lesson_info?.start_time;
@@ -484,13 +522,14 @@ app.get('/lessons/:id', (req: Request, res: Response) => {
         room: room,
         comment: comment
     }); 
-});
+}); */
 
 app.post('/lessons', (req: Request, res: Response) => {
 
     console.log(req.body);
     const start_time = req.body.start_time || null;
     const end_time = req.body.end_time || null;
+    const duration = req.body.duration || null;
     const course_id: number = req.body.course_id || null;
     const subject_id: number = req.body.subject_id || null;
     const teacher_id: number = req.body.teacher_id || null;
@@ -503,6 +542,7 @@ app.post('/lessons', (req: Request, res: Response) => {
         id,
         start_time,
         end_time,
+        duration,
         course_id,
         subject_id,
         teacher_id,

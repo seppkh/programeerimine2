@@ -131,6 +131,7 @@ Endpoints for viewing and manipulating Lessons.
     "lesson": 1,
     "start_time": "2021-09-30 10:00",
     "end_time": "2021-09-30 13:15",
+    "duration": 4,
     "course": {
         "id": 2,
         "name": "Rakendusinformaatika2"
