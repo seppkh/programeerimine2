@@ -21,6 +21,7 @@ import responseCodes from './components/general/responseCodes';
 import port from './components/general/settings';
 // import pathCheck from './components/general/pathCheckMiddleware';
 import headers from './components/general/corsCacheHeaderMiddleware';
+import authController from './components/auth/controller';
 
 /**
  * Create express app
@@ -56,9 +57,14 @@ app.get('/ping', (req: Request, res: Response) => {
 });
 
 /**
+ * Login endpoint
+ */
+app.post('/login', authController.login);
+
+/**
  * Users endpoints
  * */
-app.get('/users/new/group', usersController.getAllUsers);
+app.get('/users', usersController.getAllUsers);
 app.get('/users/:id', usersController.getUserById);
 app.post('/users', usersController.createUser);
 app.put('/users/:id', usersController.updateUser);

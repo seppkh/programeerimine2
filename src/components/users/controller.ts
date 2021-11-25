@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import responseCodes from '../general/responseCodes';
+import { NewUser, UpdateUser } from './interface';
 import usersService from './service';
 
 const usersController = {
@@ -10,7 +11,6 @@ const usersController = {
     });
   },
   getUserById: (req: Request, res: Response) => {
-    // console.log(req.params);
     const id: number = parseInt(req.params.id, 10);
     if (!id) {
       return res.status(responseCodes.badRequest).json({
@@ -27,8 +27,10 @@ const usersController = {
       user,
     });
   },
-  createUser: (req: Request, res: Response) => {
-    const { firstName, lastName } = req.body;
+  createUser: async (req: Request, res: Response) => {
+    const {
+      firstName, lastName, email, password,
+    } = req.body;
     if (!firstName) {
       return res.status(responseCodes.badRequest).json({
         error: 'First name is required',
@@ -39,7 +41,24 @@ const usersController = {
         error: 'Last name is required',
       });
     }
-    const id = usersService.createUser(firstName, lastName);
+    if (!email) {
+      return res.status(responseCodes.badRequest).json({
+        error: 'Email is required',
+      });
+    }
+    if (!password) {
+      return res.status(responseCodes.badRequest).json({
+        error: 'Password is required',
+      });
+    }
+    const newUser: NewUser = {
+      firstName,
+      lastName,
+      email,
+      password,
+      role: 'User',
+    };
+    const id = await usersService.createUser(newUser);
     return res.status(responseCodes.created).json({
       id,
     });
@@ -51,13 +70,18 @@ const usersController = {
         error: `Id ${id} is not valid`,
       });
     }
-    const { firstName, lastName } = req.body;
-    if (!firstName && !lastName) {
+    const {
+      firstName, lastName, email, password, role,
+    } = req.body;
+    if (!firstName && !lastName && email ! && password ! && role !) {
       return res.status(responseCodes.badRequest).json({
         error: 'Nothing to update',
       });
     }
-    usersService.updateUser(id, firstName, lastName);
+    const updateUser: UpdateUser = {
+      id, firstName, lastName, email, password, role,
+    };
+    usersService.updateUser(updateUser);
     return res.status(responseCodes.noContent).json({
     });
   },

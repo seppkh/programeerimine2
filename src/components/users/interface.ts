@@ -1,7 +1,22 @@
-interface User {
-  id: number,
+interface NewUser {
   firstName: string,
-  lastName:string;
+  lastName: string,
+  email: string,
+  password: string,
+  role: 'Admin' | 'User',
 }
 
-export default User;
+interface User extends NewUser {
+  id: number;
+}
+
+interface UpdateUser {
+  id: number;
+  firstName?: string,
+  lastName?: string,
+  email?: string,
+  password?: string,
+  role?: 'Admin' | 'User';
+}
+
+export { NewUser, User, UpdateUser };
