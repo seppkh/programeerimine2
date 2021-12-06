@@ -26,17 +26,17 @@ const db: Db = {
       id: 1,
       firstName: 'Juku',
       lastName: 'Juurikas',
-      email: "juku@juurikas.ee",
-      password: "$2b$10$nu/BtcSMvBDqF2l14ZnXrebbR0q63g.l.UoEddgRzNAeWKr8YA8cK",
-      role: "Admin",
+      email: 'juku@juurikas.ee',
+      password: '$2b$10$nu/BtcSMvBDqF2l14ZnXrebbR0q63g.l.UoEddgRzNAeWKr8YA8cK',
+      role: 'Admin',
     },
     {
       id: 2,
       firstName: 'Mari',
       lastName: 'Maasikas',
-      email: "mari@maasikas.ee",
-      password: "$2b$10$I/pRBg1QTpvwXRjm./b5F.iByImcn8DNQmOos5Oom/PQ7W9d4t3ra",
-      role: "User",
+      email: 'mari@maasikas.ee',
+      password: '$2b$10$I/pRBg1QTpvwXRjm./b5F.iByImcn8DNQmOos5Oom/PQ7W9d4t3ra',
+      role: 'User',
     },
   ],
   courses: [
@@ -97,6 +97,7 @@ const db: Db = {
   lessons: [
     {
       id: 1,
+      createdBy: 1,
       startTime: null,
       endTime: null,
       duration: null,
@@ -108,6 +109,7 @@ const db: Db = {
     },
     {
       id: 2,
+      createdBy: 1,
       startTime: null,
       endTime: null,
       duration: null,

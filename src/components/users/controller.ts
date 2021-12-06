@@ -5,6 +5,8 @@ import usersService from './service';
 
 const usersController = {
   getAllUsers: (req: Request, res: Response) => {
+    // console.log(req.headers);
+    // console.log('User:', res.locals.user);
     const users = usersService.getAllUsers();
     return res.status(responseCodes.ok).json({
       users,
@@ -15,6 +17,11 @@ const usersController = {
     if (!id) {
       return res.status(responseCodes.badRequest).json({
         error: `Id ${id} is not valid`,
+      });
+    }
+    if ((id !== res.locals.user.id) && (res.locals.user.role !== 'Admin')) {
+      return res.status(responseCodes.notAuthorized).json({
+        error: 'You have no permission for this information',
       });
     }
     const user = usersService.getUserById(id);

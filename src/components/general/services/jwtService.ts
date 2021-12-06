@@ -23,9 +23,18 @@ const jwtService = {
     const token = await jwt.sign(payload, jwtSecret, { expiresIn: '1h' });
     return token;
   },
-  // verify: async (token: string) => {
-  // const match = jwt.verify(token, jwtSecret);
-
+  verify: async (token: string) => {
+    /* const verify = await jwt.verify(token, jwtSecret);
+    console.log(verify);
+    return verify; */
+    try {
+      const verify = await jwt.verify(token, jwtSecret); // vastuseks payload: { id: 1, role: 'Admin', iat: 1638026585, exp: 1638030185 }
+      return verify;
+    } catch (error) {
+      // console.log(error);
+      return false;
+    }
+  },
 };
 
 export default jwtService;

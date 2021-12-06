@@ -1,5 +1,6 @@
 interface Lesson {
   id: number,
+  createdBy: number,
   startTime: string | null,
   endTime: string | null,
   duration: null | null,
@@ -9,7 +10,8 @@ interface Lesson {
   roomId: number,
   comment: string | null;
 }
-interface CreateLesson {
+interface NewLesson {
+  createdBy: number,
   startTime: string | null,
   endTime: string | null,
   duration: null | null,
@@ -31,4 +33,4 @@ interface UpdateLesson {
   comment?: string | null;
 }
 
-export { Lesson, CreateLesson, UpdateLesson };
+export { Lesson, NewLesson, UpdateLesson };

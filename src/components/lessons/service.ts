@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import db from '../../db';
-import { Lesson, CreateLesson, UpdateLesson } from './interface';
+import { Lesson, NewLesson, UpdateLesson } from './interface';
 
 const lessonsService = {
   getAllLessons: (): Lesson[] => {
@@ -11,13 +11,14 @@ const lessonsService = {
     const lesson = db.lessons.find((element) => element.id === id);
     return lesson;
   },
-  createLesson: (data: CreateLesson): number => {
+  createLesson: (data: NewLesson): number => {
     const {
-      startTime, endTime, duration, courseId, subjectId, teacherId, roomId, comment,
+      createdBy, startTime, endTime, duration, courseId, subjectId, teacherId, roomId, comment,
     } = data;
     const id = db.lessons[db.lessons.length - 1].id + 1;
     db.lessons.push({
       id,
+      createdBy,
       startTime,
       endTime,
       duration,

@@ -24,49 +24,11 @@ const lessonsController = {
   },
   createLesson: (req: Request, res: Response) => {
     const {
-      startTime, endTime, duration, courseId, subjectId, teacherId, roomId,
+      createdBy, startTime, endTime, duration, courseId, subjectId, teacherId, roomId, comment,
     } = req.body;
-    let { comment } = req.body;
-
-    if (!startTime) {
-      return res.status(responseCodes.badRequest).json({
-        error: 'Start time is required',
-      });
-    }
-    if (!endTime) {
-      return res.status(responseCodes.badRequest).json({
-        error: 'End time is required',
-      });
-    }
-    if (!duration) {
-      return res.status(responseCodes.badRequest).json({
-        error: 'Duration is required',
-      });
-    }
-    if (!courseId) {
-      return res.status(responseCodes.badRequest).json({
-        error: 'Course id is required',
-      });
-    }
-    if (!subjectId) {
-      return res.status(responseCodes.badRequest).json({
-        error: 'Subject id is required',
-      });
-    }
-    if (!teacherId) {
-      return res.status(responseCodes.badRequest).json({
-        error: 'Teacher id is required',
-      });
-    }
-    if (!roomId) {
-      return res.status(responseCodes.badRequest).json({
-        error: 'Room id is required',
-      });
-    }
-    if (!comment) comment = null;
 
     const id = lessonsService.createLesson({
-      startTime, endTime, duration, courseId, subjectId, teacherId, roomId, comment,
+      createdBy, startTime, endTime, duration, courseId, subjectId, teacherId, roomId, comment,
     });
     return res.status(responseCodes.created).json({
       id,
