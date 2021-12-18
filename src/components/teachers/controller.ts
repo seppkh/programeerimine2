@@ -1,22 +1,23 @@
 import { Request, Response } from 'express';
 import responseCodes from '../general/responseCodes';
 import teachersService from './service';
+import { iNewTeacher, iUpdateTeacher } from './interface';
 
 const teachersController = {
-  getAllTeachers: (req: Request, res: Response) => {
-    const teachers = teachersService.getAllTeachers();
+  getAllTeachers: async (req: Request, res: Response) => {
+    const teachers = await teachersService.getAllTeachers();
     res.status(responseCodes.ok).json({
       teachers,
     });
   },
-  getTeacherById: (req: Request, res: Response) => {
+  getTeacherById: async (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id, 10);
     if (!id) {
       return res.status(responseCodes.badRequest).json({
         error: `Id ${id} is not valid`,
       });
     }
-    const teacher = teachersService.getTeacherById(id);
+    const teacher = await teachersService.getTeacherById(id);
     if (!teacher) {
       return res.status(responseCodes.badRequest).json({
         error: `No teacher found with id ${id}`,
@@ -26,19 +27,28 @@ const teachersController = {
       teacher,
     });
   },
-  createTeacher: (req: Request, res: Response) => {
+  createTeacher: async (req: Request, res: Response) => {
     const { name } = req.body;
     if (!name) {
       return res.status(responseCodes.badRequest).json({
         error: 'Name is required',
       });
     }
-    const id = teachersService.createTeacher(name);
+    const createdBy = res.locals.user.id;
+    const newTeacher: iNewTeacher = {
+      name,
+      createdBy,
+    };
+    const id = await teachersService.createTeacher(newTeacher);
+
+    if (!id) {
+      return res.status(responseCodes.serverError).json({});
+    }
     return res.status(responseCodes.created).json({
       id,
     });
   },
-  updateTeacher: (req: Request, res: Response) => {
+  updateTeacher: async (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id, 10);
     if (!id) {
       return res.status(responseCodes.badRequest).json({
@@ -51,11 +61,15 @@ const teachersController = {
         error: 'Nothing to update',
       });
     }
-    teachersService.updateTeacher(id, name);
+    const teacher: iUpdateTeacher = {
+      id,
+      name,
+    };
+    await teachersService.updateTeacher(teacher);
     return res.status(responseCodes.noContent).json({
     });
   },
-  removeTeacher: (req: Request, res: Response) => {
+  removeTeacher: async (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id, 10);
     if (!id) {
       return res.status(responseCodes.badRequest).json({
@@ -68,7 +82,7 @@ const teachersController = {
         error: `Teachers not found with id ${id}`,
       });
     }
-    teachersService.removeTeacher(id);
+    await teachersService.removeTeacher(id);
     return res.status(responseCodes.noContent).json({
     });
   },

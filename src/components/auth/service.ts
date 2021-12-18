@@ -7,7 +7,7 @@ const loginService = {
   /**
     * Kas kasutaja eksisteerib?
     */
-    const user = usersService.getUserByEmail(email);
+    const user = await usersService.getUserByEmail(email);
     if (!user) return false;
     /**
      * Kas sisestatud parool matchib salvestatud parooliga?
@@ -17,7 +17,7 @@ const loginService = {
     /**
      * Return jwtoken to confirm login if entered password matches with hashed password
      */
-    const token = jwtService.sign(user);
+    const token = await jwtService.sign(user);
 
     return token;
     // return token;

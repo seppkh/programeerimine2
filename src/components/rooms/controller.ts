@@ -1,22 +1,23 @@
 import { Request, Response } from 'express';
 import responseCodes from '../general/responseCodes';
 import roomsService from './service';
+import { iNewRoom, iUpdateRoom } from './interface';
 
 const roomsController = {
-  getAllRooms: (req: Request, res: Response) => {
-    const rooms = roomsService.getAllRooms();
+  getAllRooms: async (req: Request, res: Response) => {
+    const rooms = await roomsService.getAllRooms();
     res.status(responseCodes.ok).json({
       rooms,
     });
   },
-  getRoomById: (req: Request, res: Response) => {
+  getRoomById: async (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id, 10);
     if (!id) {
       return res.status(responseCodes.badRequest).json({
         error: `Id ${id} is not valid`,
       });
     }
-    const room = roomsService.getRoomById(id);
+    const room = await roomsService.getRoomById(id);
     if (!room) {
       return res.status(responseCodes.badRequest).json({
         error: `No room found with id ${id}`,
@@ -26,19 +27,28 @@ const roomsController = {
       room,
     });
   },
-  createRoom: (req: Request, res: Response) => {
+  createRoom: async (req: Request, res: Response) => {
     const { name } = req.body;
     if (!name) {
       return res.status(responseCodes.badRequest).json({
         error: 'Name is required',
       });
     }
-    const id = roomsService.createRoom(name);
+    const createdBy = res.locals.user.id;
+    const newRoom: iNewRoom = {
+      name,
+      createdBy,
+    };
+    const id = await roomsService.createRoom(newRoom);
+
+    if (!id) {
+      return res.status(responseCodes.serverError).json({});
+    }
     return res.status(responseCodes.created).json({
       id,
     });
   },
-  updateRoom: (req: Request, res: Response) => {
+  updateRoom: async (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id, 10);
     if (!id) {
       return res.status(responseCodes.badRequest).json({
@@ -51,11 +61,15 @@ const roomsController = {
         error: 'Nothing to update',
       });
     }
-    roomsService.updateRoom(id, name);
+    const room: iUpdateRoom = {
+      id,
+      name,
+    };
+    await roomsService.updateRoom(room);
     return res.status(responseCodes.noContent).json({
     });
   },
-  removeRoom: (req: Request, res: Response) => {
+  removeRoom: async (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id, 10);
     if (!id) {
       return res.status(responseCodes.badRequest).json({
@@ -68,7 +82,7 @@ const roomsController = {
         error: `Rooms not found with id ${id}`,
       });
     }
-    roomsService.removeRoom(id);
+    await roomsService.removeRoom(id);
     return res.status(responseCodes.noContent).json({
     });
   },

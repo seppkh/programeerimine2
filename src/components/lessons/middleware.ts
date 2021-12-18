@@ -1,13 +1,14 @@
+/* eslint-disable max-len */
 import { Request, Response, NextFunction } from 'express';
 import responseCodes from '../general/responseCodes';
 
 const validateCreateLesson = (req: Request, res: Response, next: NextFunction) => {
+  // createdBy väärtus on sisseloginud kasutaja id, mis on salvestatud res.locals.user.id alla:
+  req.body.createdBy = res.locals.user.id;
+
   const {
     startTime, endTime, duration, courseId, subjectId, teacherId, roomId,
   } = req.body;
-
-  // createdBy väärtus on sisseloginud kasutaja id, mis on salvestatud res.locals.user.id alla:
-  req.body.createdBy = res.locals.user.id;
 
   if (!startTime) {
     return res.status(responseCodes.badRequest).json({
@@ -26,22 +27,22 @@ const validateCreateLesson = (req: Request, res: Response, next: NextFunction) =
   }
   if (!courseId) {
     return res.status(responseCodes.badRequest).json({
-      error: 'Course id is required',
+      error: 'Course ID is required',
     });
   }
   if (!subjectId) {
     return res.status(responseCodes.badRequest).json({
-      error: 'Subject id is required',
+      error: 'Subject ID is required',
     });
   }
   if (!teacherId) {
     return res.status(responseCodes.badRequest).json({
-      error: 'Teacher id is required',
+      error: 'Teacher ID is required',
     });
   }
   if (!roomId) {
     return res.status(responseCodes.badRequest).json({
-      error: 'Room id is required',
+      error: 'Room ID is required',
     });
   }
   const { comment } = req.body;
@@ -51,4 +52,25 @@ const validateCreateLesson = (req: Request, res: Response, next: NextFunction) =
   return next();
 };
 
-export default validateCreateLesson;
+const validateUpdateLesson = (req: Request, res: Response, next: NextFunction) => {
+  const id: number = parseInt(req.params.id, 10);
+  if (!id) {
+    return res.status(responseCodes.badRequest).json({
+      error: `Id ${id} is not valid`,
+    });
+  }
+
+  const {
+    startTime, endTime, duration, courseId, subjectId, teacherId, roomId, comment,
+  } = req.body;
+
+  if (!startTime && !endTime && !duration && !courseId && !subjectId && !teacherId && !roomId && !comment) {
+    return res.status(responseCodes.badRequest).json({
+      error: 'Nothing to update',
+    });
+  }
+
+  return next();
+};
+
+export { validateCreateLesson, validateUpdateLesson };

@@ -1,19 +1,19 @@
-import { User } from './components/users/interface';
-import Course from './components/courses/interface';
-import Teacher from './components/teachers/interface';
-import Subject from './components/subjects/interface';
-import Room from './components/rooms/interface';
+import { dbUser } from './components/users/interface';
+import { dbCourse } from './components/courses/interface';
+import { dbTeacher } from './components/teachers/interface';
+import { dbSubject } from './components/subjects/interface';
+import { dbRoom } from './components/rooms/interface';
 import { Lesson } from './components/lessons/interface';
 
 /**
   * Database interface
   */
 interface Db {
-  users: User[];
-  courses: Course[];
-  subjects: Subject[];
-  teachers: Teacher[];
-  rooms: Room[];
+  users: dbUser[];
+  courses: dbCourse[];
+  subjects: dbSubject[];
+  teachers: dbTeacher[];
+  rooms: dbRoom[];
   lessons: Lesson[];
 }
 
@@ -43,14 +43,17 @@ const db: Db = {
     {
       id: 1,
       name: 'Liikluskorraldus1',
+      createdBy: 1,
     },
     {
       id: 2,
       name: 'Rakendusinformaatika2',
+      createdBy: 1,
     },
     {
       id: 3,
       name: 'Käsitöö1',
+      createdBy: 1,
     },
   ],
   subjects: [
@@ -58,40 +61,50 @@ const db: Db = {
       id: 1,
       name: 'Erialane inglise keel',
       EAP: 6,
+      createdBy: 1,
     },
     {
       id: 2,
       name: 'Programmeerimine II',
       EAP: 3,
+      createdBy: 1,
     },
     {
       id: 3,
       name: 'IT ja Õigus',
       EAP: 4,
+      createdBy: 1,
     },
   ],
   teachers: [
     {
       id: 1,
       name: 'Mari Kuli',
+      createdBy: 1,
     },
     {
       id: 2,
       name: 'Laura Hein',
+      createdBy: 1,
+
     },
     {
       id: 3,
       name: 'Martti Raavel',
+      createdBy: 1,
+
     },
   ],
   rooms: [
     {
       id: 1,
       name: 'Arvutiklass 203',
+      createdBy: 1,
     },
     {
       id: 2,
       name: 'Auditoorium 307',
+      createdBy: 1,
     },
   ],
   lessons: [

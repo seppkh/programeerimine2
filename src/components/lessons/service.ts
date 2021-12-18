@@ -1,55 +1,95 @@
 /* eslint-disable max-len */
-import db from '../../db';
-import { Lesson, NewLesson, UpdateLesson } from './interface';
+import { FieldPacket, ResultSetHeader } from 'mysql2';
+import { iLesson, iNewLesson, iUpdateLesson } from './interface';
+import pool from '../../database';
 
 const lessonsService = {
-  getAllLessons: (): Lesson[] => {
-    const { lessons } = db;
-    return lessons;
+  getAllLessons: async (): Promise<iLesson[] | false> => {
+    try {
+      const [lessons]: [iLesson[], FieldPacket[]] = await pool.query(`SELECT T1.id, T1.startTime, T1.endTime, T1.duration,
+      courses.name as course,
+      subjects.name as subject,
+      teachers.name as teacher,
+      rooms.name as room,
+      T1.comment,
+      T1.dateCreated,
+      T1.dateUpdated,
+      T1.dateDeleted, 
+      users.email AS createdBy
+      FROM lessons T1
+      JOIN users ON users.id = T1.createdBy
+      JOIN courses ON courses.id = T1.courseId
+      JOIN subjects ON subjects.id = T1.subjectId
+      JOIN teachers ON teachers.id = T1.teacherId
+      JOIN rooms ON rooms.id = T1.roomId
+      WHERE 
+      T1.dateDeleted IS NULL;`);
+      console.log(lessons);
+      return lessons;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   },
-  getLessonById: (id: number): Lesson | undefined => {
-    const lesson = db.lessons.find((element) => element.id === id);
-    return lesson;
+  getLessonById: async (id: number): Promise<iLesson[] | string | false> => {
+    try {
+      const [lesson]: [iLesson[], FieldPacket[]] = await pool.query(`SELECT T1.id, T1.startTime, T1.endTime, T1.duration,
+      courses.name as course,
+      subjects.name as subject,
+      teachers.name as teacher,
+      rooms.name as room,
+      T1.comment,
+      T1.dateCreated,
+      T1.dateUpdated,
+      T1.dateDeleted, 
+      users.email AS createdBy
+      FROM lessons T1
+      JOIN users ON users.id = T1.createdBy
+      JOIN courses ON courses.id = T1.courseId
+      JOIN subjects ON subjects.id = T1.subjectId
+      JOIN teachers ON teachers.id = T1.teacherId
+      JOIN rooms ON rooms.id = T1.roomId
+      WHERE T1.id = ?
+      AND T1.dateDeleted IS NULL
+      LIMIT 1;`, [id]);
+      console.log(lesson);
+      if (lesson.length === 0) return 'Item is not available';
+      return lesson;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   },
-  createLesson: (data: NewLesson): number => {
-    const {
-      createdBy, startTime, endTime, duration, courseId, subjectId, teacherId, roomId, comment,
-    } = data;
-    const id = db.lessons[db.lessons.length - 1].id + 1;
-    db.lessons.push({
-      id,
-      createdBy,
-      startTime,
-      endTime,
-      duration,
-      courseId,
-      subjectId,
-      teacherId,
-      roomId,
-      comment,
-    });
-    return id;
-  },
-  updateLesson: (data: UpdateLesson): boolean => {
-    const {
-      id, startTime, endTime, duration, courseId, subjectId, teacherId, roomId, comment,
-    } = data;
-    const index = db.lessons.findIndex((element) => element.id === id);
-    if (startTime) db.lessons[index].startTime = startTime;
-    if (endTime) db.lessons[index].endTime = endTime;
-    if (duration) db.lessons[index].duration = duration;
-    if (courseId) db.lessons[index].courseId = courseId;
-    if (subjectId) db.lessons[index].subjectId = subjectId;
-    if (teacherId) db.lessons[index].teacherId = teacherId;
-    if (roomId) db.lessons[index].roomId = roomId;
-    if (comment) db.lessons[index].comment = comment;
+  createLesson: async (lesson: iNewLesson): Promise<number | false> => {
+    try {
+      const [result]: [ResultSetHeader, FieldPacket[]] = await pool.query('INSERT INTO lessons SET ?, dateCreated = ?', [lesson, new Date()]);
+      console.log(result.insertId);
 
-    return true;
+      return result.insertId;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   },
-  removeLesson: (id: number): boolean => {
-    const index = db.lessons.findIndex((element) => element.id === id);
-    db.lessons.splice(index, 1);
-    return true;
+  updateLesson: async (lesson: iUpdateLesson): Promise<boolean> => {
+    try {
+      await pool.query('UPDATE lessons SET ?, dateUpdated = ? WHERE id = ?', [lesson, new Date(), lesson.id]);
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  },
+  removeLesson: async (id: number): Promise<boolean> => {
+    try {
+      const dateUpdated = new Date();
+      const dateDeleted = new Date();
+      await pool.query('UPDATE lessons SET dateUpdated = ?, dateDeleted = ? WHERE id = ?', [dateUpdated, dateDeleted, id]);
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   },
 };
 

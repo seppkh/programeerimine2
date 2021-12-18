@@ -5,11 +5,11 @@
  * for typescript: npm --save-dev @types/jsonwebtoken
  */
 import jwt from 'jsonwebtoken';
-import { User } from '../../users/interface';
+import { dbUser } from '../../users/interface';
 
 const jwtSecret = 'mfu20t9#er0h83rfe';
 const jwtService = {
-  sign: async (user: User) => {
+  sign: async (user: dbUser) => {
     /**
      * https://www.npmjs.com/package/jsonwebtoken
      * jwt.sign(payload, secretOrPrivateKey, [options, callback])

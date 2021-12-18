@@ -1,32 +1,59 @@
-import db from '../../db';
-import Course from './interface';
+import { FieldPacket, ResultSetHeader } from 'mysql2';
+import { iNewCourse, iCourse, iUpdateCourse } from './interface';
+import pool from '../../database';
 
 const coursesService = {
-  getAllCourses: (): Course[] => {
-    const { courses } = db;
-    return courses;
+  getAllCourses: async (): Promise<iCourse[] | false> => {
+    try {
+      const [courses]: [iCourse[], FieldPacket[]] = await pool.query('SELECT T1.id, T1.name, T1.dateCreated, T1.dateUpdated, T1.dateDeleted, users.email AS createdBy FROM courses T1 JOIN users ON users.id = T1.createdBy WHERE T1.dateDeleted IS NULL;');
+      console.log(courses);
+      return courses;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   },
-  getCourseById: (id: number): Course | undefined => {
-    const course = db.courses.find((element) => element.id === id);
-    return course;
+  getCourseById: async (id: number): Promise<iCourse[] | string | false> => {
+    try {
+      const [course]: [iCourse[], FieldPacket[]] = await pool.query('SELECT T1.id, T1.name, T1.dateCreated, T1.dateUpdated, T1.dateDeleted, users.email AS createdBy FROM courses T1 JOIN users ON users.id = T1.createdBy WHERE T1.id = ? AND T1.dateDeleted IS NULL LIMIT 1;', [id]);
+      console.log(course);
+      if (course.length === 0) return 'Item is not available';
+      return course;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   },
-  createCourse: (name: string): number => {
-    const id = db.courses[db.courses.length - 1].id + 1;
-    db.courses.push({
-      id,
-      name,
-    });
-    return id;
+  createCourse: async (course: iNewCourse): Promise<number | false> => {
+    try {
+      const [result]: [ResultSetHeader, FieldPacket[]] = await pool.query('INSERT INTO courses SET name = ?, createdBy = ?, dateCreated = ?', [course.name, course.createdBy, new Date()]);
+      console.log(result.insertId);
+
+      return result.insertId;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   },
-  updateCourse: (id: number, name: string): boolean => {
-    const index = db.courses.findIndex((element) => element.id === id);
-    db.courses[index].name = name;
-    return true;
+  updateCourse: async (course: iUpdateCourse): Promise<boolean> => {
+    try {
+      await pool.query('UPDATE courses SET name = ?, dateUpdated = ? WHERE id = ?', [course.name, new Date(), course.id]);
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   },
-  removeCourse: (id: number): boolean => {
-    const index = db.courses.findIndex((element) => element.id === id);
-    db.courses.splice(index, 1);
-    return true;
+  removeCourse: async (id: number): Promise<boolean> => {
+    try {
+      const dateUpdated = new Date();
+      const dateDeleted = new Date();
+      await pool.query('UPDATE courses SET dateUpdated = ?, dateDeleted = ? WHERE id = ?', [dateUpdated, dateDeleted, id]);
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   },
 };
 

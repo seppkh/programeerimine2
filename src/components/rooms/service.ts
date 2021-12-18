@@ -1,32 +1,59 @@
-import db from '../../db';
-import Room from './interface';
+import { FieldPacket, ResultSetHeader } from 'mysql2';
+import { iNewRoom, iRoom, iUpdateRoom } from './interface';
+import pool from '../../database';
 
 const roomsService = {
-  getAllRooms: (): Room[] => {
-    const { rooms } = db;
-    return rooms;
+  getAllRooms: async (): Promise<iRoom[] | false> => {
+    try {
+      const [rooms]: [iRoom[], FieldPacket[]] = await pool.query('SELECT T1.id, T1.name, T1.dateCreated, T1.dateUpdated, T1.dateDeleted, users.email AS createdBy FROM rooms T1 JOIN users ON users.id = T1.createdBy WHERE T1.dateDeleted IS NULL;');
+      console.log(rooms);
+      return rooms;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   },
-  getRoomById: (id: number): Room | undefined => {
-    const room = db.rooms.find((element) => element.id === id);
-    return room;
+  getRoomById: async (id: number): Promise<iRoom[] | string | false> => {
+    try {
+      const [room]: [iRoom[], FieldPacket[]] = await pool.query('SELECT T1.id, T1.name, T1.dateCreated, T1.dateUpdated, T1.dateDeleted, users.email AS createdBy FROM rooms T1 JOIN users ON users.id = T1.createdBy WHERE T1.id = ? AND T1.dateDeleted IS NULL LIMIT 1;', [id]);
+      console.log(room);
+      if (room.length === 0) return 'Item is not available';
+      return room;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   },
-  createRoom: (name: string): number => {
-    const id = db.rooms[db.rooms.length - 1].id + 1;
-    db.rooms.push({
-      id,
-      name,
-    });
-    return id;
+  createRoom: async (room: iNewRoom): Promise<number | false> => {
+    try {
+      const [result]: [ResultSetHeader, FieldPacket[]] = await pool.query('INSERT INTO rooms SET name = ?, createdBy = ?, dateCreated = ?', [room.name, room.createdBy, new Date()]);
+      console.log(result.insertId);
+
+      return result.insertId;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   },
-  updateRoom: (id: number, name: string): boolean => {
-    const index = db.rooms.findIndex((element) => element.id === id);
-    db.rooms[index].name = name;
-    return true;
+  updateRoom: async (room: iUpdateRoom): Promise<boolean> => {
+    try {
+      await pool.query('UPDATE rooms SET name = ?, dateUpdated = ? WHERE id = ?', [room.name, new Date(), room.id]);
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   },
-  removeRoom: (id: number): boolean => {
-    const index = db.rooms.findIndex((element) => element.id === id);
-    db.rooms.splice(index, 1);
-    return true;
+  removeRoom: async (id: number): Promise<boolean> => {
+    try {
+      const dateUpdated = new Date();
+      const dateDeleted = new Date();
+      await pool.query('UPDATE rooms SET dateUpdated = ?, dateDeleted = ? WHERE id = ?', [dateUpdated, dateDeleted, id]);
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   },
 };
 

@@ -1,6 +1,6 @@
-interface Lesson {
-  id: number,
-  createdBy: number,
+import { RowDataPacket } from 'mysql2';
+
+interface iNewLesson {
   startTime: string | null,
   endTime: string | null,
   duration: null | null,
@@ -9,19 +9,21 @@ interface Lesson {
   teacherId: number,
   roomId: number,
   comment: string | null;
-}
-interface NewLesson {
   createdBy: number,
-  startTime: string | null,
-  endTime: string | null,
-  duration: null | null,
-  courseId: number,
-  subjectId: number,
-  teacherId: number,
-  roomId: number,
-  comment: string | null;
 }
-interface UpdateLesson {
+
+interface dbLesson extends iNewLesson {
+  id: number;
+}
+
+interface iLesson extends iNewLesson, RowDataPacket {
+  id: number;
+  dateCreated?: Date;
+  dateUpdated?: Date;
+  dateDeleted?: Date | null;
+}
+
+interface iUpdateLesson {
   id: number,
   startTime?: string | null,
   endTime?: string | null,
@@ -33,4 +35,6 @@ interface UpdateLesson {
   comment?: string | null;
 }
 
-export { Lesson, NewLesson, UpdateLesson };
+export {
+  iNewLesson, dbLesson, iLesson, iUpdateLesson,
+};
