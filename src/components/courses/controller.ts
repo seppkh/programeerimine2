@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import responseCodes from '../general/responseCodes';
-import { iNewCourse, iUpdateCourse } from './interface';
 import coursesService from './service';
+import { iNewCourse, iUpdateCourse } from './interface';
 
 const coursesController = {
   getAllCourses: async (req: Request, res: Response) => {
@@ -12,13 +12,9 @@ const coursesController = {
   },
   getCourseById: async (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id, 10);
-    if (!id) {
-      return res.status(responseCodes.badRequest).json({
-        error: `Id ${id} is not valid`,
-      });
-    }
+
     const course = await coursesService.getCourseById(id);
-    if (!course) {
+    if (!course || course.length === 0) {
       return res.status(responseCodes.badRequest).json({
         error: `No course found with id ${id}`,
       });
@@ -29,11 +25,7 @@ const coursesController = {
   },
   createCourse: async (req: Request, res: Response) => {
     const { name } = req.body;
-    if (!name) {
-      return res.status(responseCodes.badRequest).json({
-        error: 'Name is required',
-      });
-    }
+
     const createdBy = res.locals.user.id;
     const newCourse: iNewCourse = {
       name,
@@ -50,40 +42,29 @@ const coursesController = {
   },
   updateCourse: async (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id, 10);
-    if (!id) {
-      return res.status(responseCodes.badRequest).json({
-        error: `Id ${id} is not valid`,
-      });
-    }
     const { name } = req.body;
-    if (!name) {
-      return res.status(responseCodes.badRequest).json({
-        error: 'Nothing to update',
-      });
-    }
+
     const course: iUpdateCourse = {
       id,
       name,
     };
-    await coursesService.updateCourse(course);
-    return res.status(responseCodes.noContent).json({
+    const result = await coursesService.updateCourse(course);
+    return res.status(responseCodes.ok).json({
+      result,
     });
   },
   removeCourse: async (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id, 10);
-    if (!id) {
+
+    const item = await coursesService.getCourseById(id);
+    if (!item || item.length === 0) {
       return res.status(responseCodes.badRequest).json({
-        error: `Id ${id} is not valid`,
+        error: `No course found with id ${id}`,
       });
     }
-    const course = coursesService.getCourseById(id);
-    if (!course) {
-      return res.status(responseCodes.badRequest).json({
-        error: `Courses not found with id ${id}`,
-      });
-    }
-    await coursesService.removeCourse(id);
-    return res.status(responseCodes.noContent).json({
+    const result = await coursesService.removeCourse(id);
+    return res.status(responseCodes.ok).json({
+      result,
     });
   },
 };

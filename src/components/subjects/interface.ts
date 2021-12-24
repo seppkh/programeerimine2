@@ -19,8 +19,8 @@ interface iSubject extends iNewSubject, RowDataPacket {
 
 interface iUpdateSubject {
   id: number,
-  name: string,
-  EAP: number,
+  name?: string,
+  EAP?: number,
 }
 
 export {

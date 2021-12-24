@@ -12,13 +12,9 @@ const subjectsController = {
   },
   getSubjectById: async (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id, 10);
-    if (!id) {
-      return res.status(responseCodes.badRequest).json({
-        error: `Id ${id} is not valid`,
-      });
-    }
+
     const subject = await subjectsService.getSubjectById(id);
-    if (!subject) {
+    if (!subject || subject.length === 0) {
       return res.status(responseCodes.badRequest).json({
         error: `No subject found with id ${id}`,
       });
@@ -51,28 +47,28 @@ const subjectsController = {
 
     const subject: iUpdateSubject = {
       id,
-      name,
-      EAP,
     };
-    await subjectsService.updateSubject(subject);
-    return res.status(responseCodes.noContent).json({
+
+    if (name) subject.name = name;
+    if (EAP) subject.EAP = EAP;
+
+    const result = await subjectsService.updateSubject(subject);
+    return res.status(responseCodes.ok).json({
+      result,
     });
   },
   removeSubject: async (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id, 10);
-    if (!id) {
+
+    const item = await subjectsService.getSubjectById(id);
+    if (!item || item.length === 0) {
       return res.status(responseCodes.badRequest).json({
-        error: `Id ${id} is not valid`,
+        error: `No subject found with id ${id}`,
       });
     }
-    const subject = subjectsService.getSubjectById(id);
-    if (!subject) {
-      return res.status(responseCodes.badRequest).json({
-        error: `Subject not found with id ${id}`,
-      });
-    }
-    await subjectsService.removeSubject(id);
-    return res.status(responseCodes.noContent).json({
+    const result = await subjectsService.removeSubject(id);
+    return res.status(responseCodes.ok).json({
+      result,
     });
   },
 };

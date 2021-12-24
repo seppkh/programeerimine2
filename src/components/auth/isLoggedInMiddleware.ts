@@ -7,7 +7,6 @@ import jwtService from '../general/services/jwtService';
 const isLoggedIn = async (req: Request, res: Response, next: NextFunction) => {
   // võtab tokeni, saadab jwt verifysse, saab kinnituse kas token on valiidne ehk kas on sisse logitud
   const token = await req.headers.authorization?.split(' ')[1];
-  console.log('token:', token);
   if (!token) {
     return res.status(responseCodes.notAuthorized).json({
       error: 'No token provided',

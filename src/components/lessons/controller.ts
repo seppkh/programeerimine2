@@ -3,6 +3,7 @@ import { Response, Request } from 'express';
 import lessonsService from './service';
 import responseCodes from '../general/responseCodes';
 import { iNewLesson, iUpdateLesson } from './interface';
+import { validateEntries } from '../general/validateEntriesMiddleware';
 
 const lessonsController = {
   getAllLessons: async (req: Request, res: Response) => {
@@ -13,14 +14,67 @@ const lessonsController = {
   },
   getLessonById: async (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id, 10);
-    if (!id) {
+
+    const lesson = await lessonsService.getLessonById(id);
+    if (!lesson || lesson.length === 0) {
       return res.status(responseCodes.badRequest).json({
-        error: `Id ${id} is not valid`,
+        error: `No lesson found with id ${id}`,
       });
     }
-    const lesson = await lessonsService.getLessonById(id);
     return res.status(responseCodes.ok).json({
       lesson,
+    });
+  },
+  getLessonsByCourseId: async (req: Request, res: Response) => {
+    const id: number = parseInt(req.params.id, 10);
+
+    const lessons = await lessonsService.getLessonsByCourseId(id);
+    if (!lessons || lessons.length === 0) {
+      return res.status(responseCodes.badRequest).json({
+        error: `No lessons found with Course Id ${id}`,
+      });
+    }
+    return res.status(responseCodes.ok).json({
+      lessons,
+    });
+  },
+  getLessonsBySubjectId: async (req: Request, res: Response) => {
+    const id: number = parseInt(req.params.id, 10);
+
+    const lessons = await lessonsService.getLessonsBySubjectId(id);
+    if (!lessons || lessons.length === 0) {
+      return res.status(responseCodes.badRequest).json({
+        error: `No lessons found with Subject Id ${id}`,
+      });
+    }
+    return res.status(responseCodes.ok).json({
+      lessons,
+    });
+  },
+  getLessonsByTeacherId: async (req: Request, res: Response) => {
+    const id: number = parseInt(req.params.id, 10);
+
+    const lessons = await lessonsService.getLessonsByTeacherId(id);
+    if (!lessons || lessons.length === 0) {
+      return res.status(responseCodes.badRequest).json({
+        error: `No lessons found with Teacher Id ${id}`,
+      });
+    }
+    return res.status(responseCodes.ok).json({
+      lessons,
+    });
+  },
+  getLessonsByRoomId: async (req: Request, res: Response) => {
+    const id: number = parseInt(req.params.id, 10);
+
+    const lessons = await lessonsService.getLessonsByRoomId(id);
+    if (!lessons || lessons.length === 0) {
+      return res.status(responseCodes.badRequest).json({
+        error: `No lessons found with Room Id ${id}`,
+      });
+    }
+    return res.status(responseCodes.ok).json({
+      lessons,
     });
   },
   createLesson: async (req: Request, res: Response) => {
@@ -51,34 +105,32 @@ const lessonsController = {
       id,
     };
 
-    if (startTime) lesson.startTime = startTime;
-    if (endTime) lesson.endTime = endTime;
+    if (startTime) lesson.startTime = validateEntries.convertToIsoDate(startTime);
+    if (endTime) lesson.endTime = validateEntries.convertToIsoDate(endTime);
     if (duration) lesson.duration = duration;
     if (courseId) lesson.courseId = courseId;
     if (subjectId) lesson.subjectId = subjectId;
     if (teacherId) lesson.teacherId = teacherId;
     if (roomId) lesson.roomId = roomId;
-    if (comment) lesson.comment = comment;
+    if (comment || comment === null) lesson.comment = comment;
 
-    await lessonsService.updateLesson(lesson);
+    const result = await lessonsService.updateLesson(lesson);
     return res.status(responseCodes.ok).json({
+      result,
     });
   },
   removeLesson: async (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id, 10);
-    if (!id) {
+
+    const item = await lessonsService.getLessonById(id);
+    if (!item || item.length === 0) {
       return res.status(responseCodes.badRequest).json({
-        error: `Id ${id} is not valid`,
+        error: `No lesson found with id ${id}`,
       });
     }
-    const lesson = lessonsService.getLessonById(id);
-    if (!lesson) {
-      return res.status(responseCodes.badRequest).json({
-        error: `Lesson not found with id ${id}`,
-      });
-    }
-    await lessonsService.removeLesson(id);
-    return res.status(responseCodes.noContent).json({
+    const result = await lessonsService.removeLesson(id);
+    return res.status(responseCodes.ok).json({
+      result,
     });
   },
 

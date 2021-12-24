@@ -6,7 +6,6 @@ const teachersService = {
   getAllTeachers: async (): Promise<iTeacher[] | false> => {
     try {
       const [teachers]: [iTeacher[], FieldPacket[]] = await pool.query('SELECT T1.id, T1.name, T1.dateCreated, T1.dateUpdated, T1.dateDeleted, users.email AS createdBy FROM teachers T1 JOIN users ON users.id = T1.createdBy WHERE T1.dateDeleted IS NULL;');
-      console.log(teachers);
       return teachers;
     } catch (error) {
       console.log(error);
@@ -16,8 +15,6 @@ const teachersService = {
   getTeacherById: async (id: number): Promise<iTeacher[] | string | false> => {
     try {
       const [teacher]: [iTeacher[], FieldPacket[]] = await pool.query('SELECT T1.id, T1.name, T1.dateCreated, T1.dateUpdated, T1.dateDeleted, users.email AS createdBy FROM teachers T1 JOIN users ON users.id = T1.createdBy WHERE T1.id = ? AND T1.dateDeleted IS NULL LIMIT 1;', [id]);
-      console.log(teacher);
-      if (teacher.length === 0) return 'Item is not available';
       return teacher;
     } catch (error) {
       console.log(error);
@@ -27,8 +24,6 @@ const teachersService = {
   createTeacher: async (teacher: iNewTeacher): Promise<number | false> => {
     try {
       const [result]: [ResultSetHeader, FieldPacket[]] = await pool.query('INSERT INTO teachers SET name = ?, createdBy = ?, dateCreated = ?', [teacher.name, teacher.createdBy, new Date()]);
-      console.log(result.insertId);
-
       return result.insertId;
     } catch (error) {
       console.log(error);

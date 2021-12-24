@@ -1,8 +1,8 @@
 import { RowDataPacket } from 'mysql2';
 
 interface iNewLesson {
-  startTime: string | null,
-  endTime: string | null,
+  startTime: Date | string | null,
+  endTime: Date | string | null,
   duration: null | null,
   courseId: number,
   subjectId: number,
@@ -25,8 +25,8 @@ interface iLesson extends iNewLesson, RowDataPacket {
 
 interface iUpdateLesson {
   id: number,
-  startTime?: string | null,
-  endTime?: string | null,
+  startTime?: Date | string | null,
+  endTime?: Date | string | null,
   duration?: null | null,
   courseId?: number,
   subjectId?: number,

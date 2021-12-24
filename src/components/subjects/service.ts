@@ -6,7 +6,6 @@ const subjectsService = {
   getAllSubjects: async (): Promise<iSubject[] | false> => {
     try {
       const [subjects]: [iSubject[], FieldPacket[]] = await pool.query('SELECT T1.id, T1.name, T1.EAP, T1.dateCreated, T1.dateUpdated, T1.dateDeleted, users.email AS createdBy FROM subjects T1 JOIN users ON users.id = T1.createdBy WHERE T1.dateDeleted IS NULL;');
-      console.log(subjects);
       return subjects;
     } catch (error) {
       console.log(error);
@@ -16,8 +15,6 @@ const subjectsService = {
   getSubjectById: async (id: number): Promise<iSubject[] | false> => {
     try {
       const [subject]: [iSubject[], FieldPacket[]] = await pool.query('SELECT T1.id, T1.name, T1.EAP, T1.dateCreated, T1.dateUpdated, T1.dateDeleted, users.email AS createdBy FROM subjects T1 JOIN users ON users.id = T1.createdBy WHERE T1.id = ? AND T1.dateDeleted IS NULL LIMIT 1;', [id]);
-      console.log(subject);
-      if (subject.length === 0) return false;
       return subject;
     } catch (error) {
       console.log(error);
@@ -27,8 +24,6 @@ const subjectsService = {
   createSubject: async (subject: iNewSubject): Promise<number | false> => {
     try {
       const [result]: [ResultSetHeader, FieldPacket[]] = await pool.query('INSERT INTO subjects SET ?, dateCreated = ?', [subject, new Date()]);
-      console.log(result.insertId);
-
       return result.insertId;
     } catch (error) {
       console.log(error);

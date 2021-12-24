@@ -12,13 +12,9 @@ const roomsController = {
   },
   getRoomById: async (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id, 10);
-    if (!id) {
-      return res.status(responseCodes.badRequest).json({
-        error: `Id ${id} is not valid`,
-      });
-    }
+
     const room = await roomsService.getRoomById(id);
-    if (!room) {
+    if (!room || room.length === 0) {
       return res.status(responseCodes.badRequest).json({
         error: `No room found with id ${id}`,
       });
@@ -29,11 +25,7 @@ const roomsController = {
   },
   createRoom: async (req: Request, res: Response) => {
     const { name } = req.body;
-    if (!name) {
-      return res.status(responseCodes.badRequest).json({
-        error: 'Name is required',
-      });
-    }
+
     const createdBy = res.locals.user.id;
     const newRoom: iNewRoom = {
       name,
@@ -50,40 +42,29 @@ const roomsController = {
   },
   updateRoom: async (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id, 10);
-    if (!id) {
-      return res.status(responseCodes.badRequest).json({
-        error: `Id ${id} is not valid`,
-      });
-    }
     const { name } = req.body;
-    if (!name) {
-      return res.status(responseCodes.badRequest).json({
-        error: 'Nothing to update',
-      });
-    }
+
     const room: iUpdateRoom = {
       id,
       name,
     };
-    await roomsService.updateRoom(room);
-    return res.status(responseCodes.noContent).json({
+    const result = await roomsService.updateRoom(room);
+    return res.status(responseCodes.ok).json({
+      result,
     });
   },
   removeRoom: async (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id, 10);
-    if (!id) {
+
+    const item = await roomsService.getRoomById(id);
+    if (!item || item.length === 0) {
       return res.status(responseCodes.badRequest).json({
-        error: `Id ${id} is not valid`,
+        error: `No room found with id ${id}`,
       });
     }
-    const room = roomsService.getRoomById(id);
-    if (!room) {
-      return res.status(responseCodes.badRequest).json({
-        error: `Rooms not found with id ${id}`,
-      });
-    }
-    await roomsService.removeRoom(id);
-    return res.status(responseCodes.noContent).json({
+    const result = await roomsService.removeRoom(id);
+    return res.status(responseCodes.ok).json({
+      result,
     });
   },
 };

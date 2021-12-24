@@ -12,18 +12,14 @@ const usersController = {
   },
   getUserById: async (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id, 10);
-    if (!id) {
-      return res.status(responseCodes.badRequest).json({
-        error: `Id ${id} is not valid`,
-      });
-    }
+
     if ((id !== res.locals.user.id) && (res.locals.user.role !== 'Admin')) {
       return res.status(responseCodes.notAuthorized).json({
         error: 'You have no permission for this information',
       });
     }
     const user = await usersService.getUserById(id);
-    if (!user) {
+    if (!user || user.length === 0) {
       return res.status(responseCodes.badRequest).json({
         error: `No user found with id ${id}`,
       });
@@ -45,6 +41,15 @@ const usersController = {
       role: 'User',
     };
     const id = await usersService.createUser(newUser);
+
+    if (!id) {
+      return res.status(responseCodes.serverError).json({});
+    }
+    if (id && typeof id === 'string') {
+      return res.status(responseCodes.badRequest).json({
+        error: id,
+      });
+    }
     return res.status(responseCodes.created).json({
       id,
     });
@@ -56,8 +61,8 @@ const usersController = {
     } = req.body;
     const isAdmin = (res.locals.user.role === 'Admin');
 
-    const user = usersService.getUserById(id);
-    if (!user) {
+    const user = await usersService.getUserById(id);
+    if (!user || user.length === 0) {
       return res.status(responseCodes.badRequest).json({
         error: `No user found with id: ${id}`,
       });
@@ -79,25 +84,27 @@ const usersController = {
     if (!result) {
       return res.status(responseCodes.serverError).json({});
     }
+    if (result && typeof result === 'string') {
+      return res.status(responseCodes.badRequest).json({
+        error: result,
+      });
+    }
     return res.status(responseCodes.ok).json({
       result,
     });
   },
   removeUser: async (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id, 10);
-    if (!id) {
+
+    const item = await usersService.getUserById(id);
+    if (!item || item.length === 0) {
       return res.status(responseCodes.badRequest).json({
-        error: `Id ${id} is not valid`,
+        error: `No user found with id ${id}`,
       });
     }
-    const user = usersService.getUserById(id);
-    if (!user) {
-      return res.status(responseCodes.badRequest).json({
-        error: `Course not found with id ${id}`,
-      });
-    }
-    await usersService.removeUser(id);
-    return res.status(responseCodes.noContent).json({
+    const result = await usersService.removeUser(id);
+    return res.status(responseCodes.ok).json({
+      result,
     });
   },
 };
