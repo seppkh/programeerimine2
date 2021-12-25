@@ -146,11 +146,6 @@ const validateUpdateUser = async (req: Request, res: Response, next: NextFunctio
       error: 'Incorrect email',
     });
   }
-  if (email && validateEntries.isEmptyString(email)) {
-    return res.status(responseCodes.badRequest).json({
-      error: 'Email cannot be an empty string',
-    });
-  }
   if (password && !validateEntries.isAtLeastFourDigits(password)) {
     return res.status(responseCodes.badRequest).json({
       error: 'Password must have at least 4 digits',

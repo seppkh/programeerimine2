@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 import request from 'supertest'; // saata päringuid api endpointidele
@@ -10,31 +11,32 @@ const user = {
   password: 'juku',
 };
 
-/*
-                        ********************
+/**
+ * Create unique emails to test creating a new user and updating an user with a new email
+ */
+const chars = 'abcdefghijklmnopqrstuvwxyz1234567890';
+let generatedEmailToCreateUser = '';
+let generatedEmailToUpdateUser = '';
+for (let ii = 0; ii < 15; ii++) {
+  generatedEmailToCreateUser += chars[Math.floor(Math.random() * chars.length)];
+}
+for (let ii = 0; ii < 15; ii++) {
+  generatedEmailToUpdateUser += chars[Math.floor(Math.random() * chars.length)];
+}
+generatedEmailToCreateUser += '@gmail.com';
+generatedEmailToUpdateUser += '@gmail.com';
 
-EMAILS on rows 23 and 766 MUST BE CHANGED to unique (non-existing) emails EVERY TIME the test is run. Existing emails are not allowed and will fail the test.
-
-                        ********************
-*/
 const newUserWithUniqueEmail = {
   firstName: 'Peeter',
   lastName: 'Tamm',
-  email: 'peeter11@tamm.ee',
+  email: generatedEmailToCreateUser,
   password: 'peeter',
 };
 
-/*
-                        ********************
-
- * newUserWithDuplicateEmail is used to check user creation when the email already exists in database. This email should NOT be changed, unless the database gets reset. If the database gets reset, then an existing email must be entered here.
-
-                        ********************
-*/
 const newUserWithDuplicateEmail = {
   firstName: 'Peeter',
   lastName: 'Tamm',
-  email: 'peeter2@tamm.ee',
+  email: 'admin@admin.ee',
   password: 'peeter',
 };
 
@@ -766,20 +768,12 @@ describe('Users controller', () => {
       expect(response.body.error).to.be.a('string');
       expect(response.body.error).to.equal('Nothing to update');
     });
-
-    /*
-                        ********************
-
-     *  Following email MUST BE CHANGED TO A UNIQUE ONE every time the test is run. Otherwise the test will fail.
-
-                        ********************
-     * */
     it('responds with code 200 and result true when email matches email format and is not a duplicate', async () => {
       const response = await request(app)
         .put(`/users/${userId}`)
         .set('Authorization', `Bearer ${token}`)
         .send({
-          email: 'margus1@tamm.ee',
+          email: generatedEmailToUpdateUser,
         });
       expect(response.body).to.be.a('object');
       expect(response.statusCode).to.equal(200);
