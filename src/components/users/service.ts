@@ -10,7 +10,7 @@ import pool from '../../database';
 const usersService = {
   getAllUsers: async (): Promise<iUser[] | false> => {
     try {
-      const [users]: [iUser[], FieldPacket[]] = await pool.query('SELECT id, firstName, lastName, email, dateCreated, role FROM users WHERE dateDeleted IS NULL');
+      const [users]: [iUser[], FieldPacket[]] = await pool.query('SELECT id, firstName, lastName, email, dateCreated, dateUpdated, dateDeleted, role FROM users WHERE dateDeleted IS NULL');
       return users;
     } catch (error) {
       console.log(error);

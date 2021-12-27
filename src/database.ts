@@ -9,20 +9,20 @@ const pool = mysql.createPool({
   user: config.db.user,
   password: config.db.password,
   database: config.db.database,
-  port: config.db.port,
+  // port: config.port,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
   multipleStatements: true,
-  connectTimeout: 3000,
+  // connectTimeout: 3000,
 }).promise();
 
 /*
-pool.query(`USE ${config.db.database};`).catch(async () => {
+pool.query(`USE ${config.db.database};`).catch(() => {
   console.log('Creating database');
-  const sqlPath = await path.join(__dirname, '../docs/modelAndSeed.sql');
-  const SQL = await fs.readFileSync(sqlPath, { encoding: 'utf-8' });
-  await pool.query(SQL).then(async () => console.log('Database created and seeded')).catch(async (err) => console.log(err));
+  const sqlPath = path.join(__dirname, '../docs/modelAndSeed.sql');
+  const SQL = fs.readFileSync(sqlPath, { encoding: 'utf-8' });
+  pool.query(SQL).then(() => console.log('Database created and seeded')).catch((err) => console.log(err));
 });
 */
 

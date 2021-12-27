@@ -4,13 +4,13 @@
  * Import express framework
  */
 import express, { Request, Response, Application } from 'express';
+import cors from 'cors';
 
 /**
    * Swagger UI for API documentation
    */
-// import swaggerUi from 'swagger-ui-express';
-
-import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from './openApi.json';
 
 import coursesController from './components/courses/controller';
 import lessonsController from './components/lessons/controller';
@@ -33,6 +33,7 @@ import validateIdNumber from './components/general/validateIdNumberMiddleware';
 import { validateCreateTeacher, validateUpdateTeacher } from './components/teachers/middleware';
 import { validateCreateCourse, validateUpdateCourse } from './components/courses/middleware';
 import { validateCreateRoom, validateUpdateRoom } from './components/rooms/middleware';
+import validateLoginInput from './components/auth/middleware';
 
 /**
   * Create express app
@@ -54,10 +55,7 @@ app.use(logger);
 /**
   * Swagger API documentation
   */
-// const swaggerUi = require('swagger-ui-express');
-/* const swaggerDocument = require('./swagger.json');
-
- app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument)); */
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 /**
   * Use CORS and cache headers in app
@@ -77,7 +75,7 @@ app.get('/ping', (req: Request, res: Response) => {
 /**
   * Endpoints without logging in middleware
   */
-app.post('/login', authController.login);
+app.post('/login', validateLoginInput, authController.login);
 app.post('/users', validateCreateUser, usersController.createUser);
 
 /**

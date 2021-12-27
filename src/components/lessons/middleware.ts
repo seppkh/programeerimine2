@@ -41,7 +41,10 @@ const validateCreateLesson = async (req: Request, res: Response, next: NextFunct
     return res.status(responseCodes.badRequest).json({
       error: 'Start time is incorrect, recommended format is YYYY-MM-DD HH:MM:SS',
     });
-  } req.body.startTime = validateEntries.convertToIsoDate(startTime);
+  }
+  if (startTime && validateEntries.isDate(startTime)) {
+    req.body.startTime = validateEntries.convertToIsoDate(startTime);
+  }
 
   if (!endTime) {
     return res.status(responseCodes.badRequest).json({
@@ -52,7 +55,10 @@ const validateCreateLesson = async (req: Request, res: Response, next: NextFunct
     return res.status(responseCodes.badRequest).json({
       error: 'End time is incorrect, recommended format is YYYY-MM-DD HH:MM:SS',
     });
-  } req.body.endTime = validateEntries.convertToIsoDate(endTime);
+  }
+  if (endTime && validateEntries.isDate(endTime)) {
+    req.body.endTime = validateEntries.convertToIsoDate(endTime);
+  }
 
   // eslint-disable-next-line prefer-template
 
@@ -151,6 +157,24 @@ const validateUpdateLesson = async (req: Request, res: Response, next: NextFunct
     return res.status(responseCodes.badRequest).json({
       error: 'Nothing to update',
     });
+  }
+
+  if (startTime && !validateEntries.isDate(startTime)) {
+    return res.status(responseCodes.badRequest).json({
+      error: 'Start time is incorrect, recommended format is YYYY-MM-DD HH:MM:SS',
+    });
+  }
+  if (startTime && validateEntries.isDate(startTime)) {
+    req.body.startTime = validateEntries.convertToIsoDate(startTime);
+  }
+
+  if (endTime && !validateEntries.isDate(startTime)) {
+    return res.status(responseCodes.badRequest).json({
+      error: 'End time is incorrect, recommended format is YYYY-MM-DD HH:MM:SS',
+    });
+  }
+  if (endTime && validateEntries.isDate(endTime)) {
+    req.body.endTime = validateEntries.convertToIsoDate(endTime);
   }
 
   if (duration && !validateEntries.isPositiveNumber(duration)) {

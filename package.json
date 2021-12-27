@@ -4,7 +4,6 @@
   "description": "Programmeerimine II projektid 2021/2022",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
     "start": "nodemon",
     "docker:start": "dotenv -- cross-var docker run --rm --name %DB_DATABASE% -p 3306:3306 -d -e MYSQL_ROOT_PASSWORD=%DB_PASSWORD% mysql",
     "docker:stop": "dotenv cross-var docker stop %DB_DATABASE%",

@@ -10,12 +10,10 @@ const validateEntries = {
     return true;
   },
   isEmptyString: (word: string) => {
-    console.log(word);
     let trimmedWord;
     if (typeof word === 'string') {
       trimmedWord = word.trim();
     }
-    console.log(trimmedWord);
     if (!(trimmedWord === '')) return false;
     return true;
   },
@@ -34,15 +32,11 @@ const validateEntries = {
             && !Number.isNaN(value);
   },
   isDate(value: string) {
-    console.log(value);
-    console.log(moment(value, moment.ISO_8601, true).isValid());
     return moment(value, moment.ISO_8601, true).isValid();
   },
   convertToIsoDate(value: string) {
-    console.log(value);
     const newDate = (new Date(value));
     const result = (new Date(newDate.getTime() - newDate.getTimezoneOffset() * 60000));
-    console.log(result);
     return result;
   },
 };

@@ -1,0 +1,2720 @@
+{
+    "openapi":"3.0.2",
+    "info": {
+      "title":"Schedule API",
+      "version":"1.0"
+    },
+    "servers": [
+      {"url":"http://localhost:3006"}
+    ],
+    "components": {
+      "responses": {
+        "UnauthorizedError": {
+          "description": "Access token is missing or invalid"
+        }
+      },
+      "securitySchemes": {
+        "bearerAuth": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
+      },
+      "schemas": {
+        "token": {
+          "type": "string",
+          "example": "ew232509250kerijekrg"
+        },
+        "id": {
+          "type": "number",
+          "description": "Entity id",
+          "example": 1,
+          "additionalProperties": false
+        },
+        "name": {
+          "type": "string",
+          "description": "Resource name",
+          "example": "Resource name",
+          "additionalProperties": false
+        },
+        "firstName": {
+          "type": "string",
+          "example": "Mati"
+        },
+        "lastName": {
+          "type": "string",
+          "example": "Murakas"
+        },
+        "email": {
+          "type": "string",
+          "example": "mati@murakas.ee"
+        },
+        "password": {
+          "type": "string",
+          "example": "mati123"
+        },
+        "startTime": {
+          "type": "string",
+          "example": "2021-12-30T10:00:00.000Z"
+        },
+        "endTime": {
+          "type": "string",
+          "example": "2021-12-30T13:15:00.000Z"
+        },
+        "dateCreated": {
+          "type": "string",
+          "example": "2021-12-27T14:35:52.000Z"
+        },
+        "dateUpdated": {
+          "type": "string",
+          "example": "2021-12-28T14:35:52.000Z"
+        },
+        "dateDeleted": {
+          "type": "string",
+          "example": "2021-12-28T14:35:52.000Z"
+        },
+        "role": {
+          "type": "string",
+          "description": "allowed entries: 'Admin', 'User'",
+          "example": "User"
+        },
+        "EAP": {
+          "type": "number",
+          "example": 5
+        },
+        "duration": {
+          "type": "number",
+          "example": 4
+        },
+        "createdBy": {
+          "type": "number",
+          "example": 1
+        },
+        "courseId": {
+          "type": "number",
+          "example": 2
+        },
+        "teacherId": {
+          "type": "number",
+          "example": 4
+        },
+        "subjectId": {
+          "type": "number",
+          "example": 3
+        },
+        "roomId": {
+          "type": "number",
+          "example": 4
+        },
+        "comment": {
+          "type": "string",
+          "example": "Toimub zoomis"
+        },
+        "user": {
+          "type": "object",
+          "description": "User object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "$ref": "#/components/schemas/id"
+            },
+            "firstName": {
+              "$ref": "#/components/schemas/firstName"
+            },
+            "lastName": {
+              "$ref": "#/components/schemas/lastName"
+            },
+            "email": {
+              "$ref": "#/components/schemas/email"
+            },
+            "dateCreated": {
+              "$ref": "#/components/schemas/dateCreated"
+            },
+            "dateUpdated": {
+              "$ref": "#/components/schemas/dateUpdated"
+            },
+            "dateDeleted": {
+              "$ref": "#/components/schemas/dateDeleted"
+            },
+            "role": {
+              "$ref": "#/components/schemas/role"
+            }
+          }
+        },
+        "teacher": {
+          "type": "object",
+          "description": "Teacher object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "$ref": "#/components/schemas/id"
+            },
+            "name": {
+              "$ref": "#/components/schemas/name"
+            },
+            "dateCreated": {
+              "$ref": "#/components/schemas/dateCreated"
+            },
+            "dateUpdated": {
+              "$ref": "#/components/schemas/dateUpdated"
+            },
+            "dateDeleted": {
+              "$ref": "#/components/schemas/dateDeleted"
+            },
+            "createdBy": {
+              "$ref": "#/components/schemas/createdBy"
+            }
+          }
+        },
+        "course": {
+          "type": "object",
+          "description": "Course object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "$ref": "#/components/schemas/id"
+            },
+            "name": {
+              "$ref": "#/components/schemas/name"
+            },
+            "dateCreated": {
+              "$ref": "#/components/schemas/dateCreated"
+            },
+            "dateUpdated": {
+              "$ref": "#/components/schemas/dateUpdated"
+            },
+            "dateDeleted": {
+              "$ref": "#/components/schemas/dateDeleted"
+            },
+            "createdBy": {
+              "$ref": "#/components/schemas/createdBy"
+            }
+          }
+        },
+        "room": {
+          "type": "object",
+          "description": "Room object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "$ref": "#/components/schemas/id"
+            },
+            "name": {
+              "$ref": "#/components/schemas/name"
+            },
+            "dateCreated": {
+              "$ref": "#/components/schemas/dateCreated"
+            },
+            "dateUpdated": {
+              "$ref": "#/components/schemas/dateUpdated"
+            },
+            "dateDeleted": {
+              "$ref": "#/components/schemas/dateDeleted"
+            },
+            "createdBy": {
+              "$ref": "#/components/schemas/createdBy"
+            }
+          }
+        },
+        "subject": {
+          "type": "object",
+          "description": "Subject object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "$ref": "#/components/schemas/id"
+            },
+            "name": {
+              "$ref": "#/components/schemas/name"
+            },
+            "EAP": {
+              "$ref": "#/components/schemas/EAP"
+            },
+            "dateCreated": {
+              "$ref": "#/components/schemas/dateCreated"
+            },
+            "dateUpdated": {
+              "$ref": "#/components/schemas/dateUpdated"
+            },
+            "dateDeleted": {
+              "$ref": "#/components/schemas/dateDeleted"
+            },
+            "createdBy": {
+              "$ref": "#/components/schemas/createdBy"
+            }
+          }
+        },
+        "lesson": {
+          "type": "object",
+          "description": "Lesson object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "$ref": "#/components/schemas/id"
+            },
+            "startTime": {
+              "$ref": "#/components/schemas/startTime"
+            },
+            "endTime": {
+              "$ref": "#/components/schemas/endTime"
+            },
+            "duration": {
+              "$ref": "#/components/schemas/duration"
+            },
+            "course": {
+              "$ref": "#/components/schemas/course/properties/name"
+            },
+            "subject": {
+              "$ref": "#/components/schemas/subject/properties/name"
+            },
+            "teacher": {
+              "$ref": "#/components/schemas/teacher/properties/name"
+            },
+            "room": {
+              "$ref": "#/components/schemas/room/properties/name"
+            },
+            "comment": {
+              "$ref": "#/components/schemas/comment"
+            },
+            "dateCreated": {
+              "$ref": "#/components/schemas/dateCreated"
+            },
+            "dateUpdated": {
+              "$ref": "#/components/schemas/dateUpdated"
+            },
+            "dateDeleted": {
+              "$ref": "#/components/schemas/dateDeleted"
+            },
+            "createdBy": {
+              "$ref": "#/components/schemas/createdBy"
+            }
+          }
+        }
+      }
+    },
+    "paths": {
+      "/login": {
+        "post": {
+          "tags": [
+            "Login operations"
+          ],
+          "description": "Login with an user",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "$ref": "#/components/schemas/email"
+                    },
+                    "password": {
+                      "$ref": "#/components/schemas/password"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },          
+          "responses": {
+            "201": {
+              "description": "Login successful",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "token": {
+                        "$ref": "#/components/schemas/token"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "description": "Login failed",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "Invalid credentials": {
+                      "value": {
+                        "error": "Invalid credentials"
+                      }
+                    }
+                  }
+                }
+              }            
+            }
+          }
+        }
+      }, 
+      "/users": {
+        "get": {
+          "tags": [
+            "Users operations"
+          ],
+          "description": "Get list of all users",
+          "security": [{ 
+            "bearerAuth": [] 
+            }],
+          "responses": {
+            "200": {
+              "description": "List of users",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "users": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/user"
+                        }
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Users operations"
+          ],
+          "description": "Create new user",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "firstName": {
+                      "$ref": "#/components/schemas/firstName"
+                    },
+                    "lastName": {
+                      "$ref": "#/components/schemas/lastName"
+                    },
+                    "email": {
+                      "$ref": "#/components/schemas/email"
+                    },
+                    "password": {
+                      "$ref": "#/components/schemas/password"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },          
+          "responses": {
+            "201": {
+              "description": "User created",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "$ref": "#/components/schemas/id"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "400": {
+              "description": "Required data is missing",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "No first name": {
+                      "value": {
+                        "error": "First name is required"
+                      }
+                    },
+                    "No last name": {
+                      "value": {
+                        "error": "Last name is required"
+                      }
+                    },
+                    "No email": {
+                      "value": {
+                        "error": "Email is required"
+                      }
+                    },
+                    "No password": {
+                      "value": {
+                        "error": "Password is required"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        }
+      },
+      "/users/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "User id",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "get": {
+          "tags": [
+            "Users operations"
+          ],
+          "description": "Get user with selected id",
+          "security": [{ 
+            "bearerAuth": [] 
+            }],
+          "responses": {
+            "200": {
+              "description": "User information",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "user": {
+                        "$ref": "#/components/schemas/user"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "400": {
+              "description": "No user found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "Invalid id (string)": {
+                      "value": {
+                        "error": "Id must be a number"
+                      }
+                    },
+                    "Invalid id (negative number": {
+                      "value": {
+                        "error": "Id must be a positive number"
+                      }
+                    },
+                    "Invalid id (entered id is 0)": {
+                      "value": {
+                        "error": "No user found with id {id}"
+                      }
+                    },
+                    "Invalid id (no user exists with id)": {
+                      "value": {
+                        "error": "No user found with id {id}"
+                      }
+                    },
+                    "Invalid id (user with id is deleted)": {
+                      "value": {
+                        "error": "No user found with id {id}"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "Users operations"
+          ],
+          "description": "Update user with id",
+          "security": [{ 
+            "bearerAuth": [] 
+            }],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "firstName": {
+                      "$ref": "#/components/schemas/firstName"
+                    },
+                    "lastName": {
+                      "$ref": "#/components/schemas/lastName"
+                    },
+                    "email": {
+                      "$ref": "#/components/schemas/email"
+                    },
+                    "password": {
+                      "$ref": "#/components/schemas/password"
+                    },
+                    "role": {
+                      "$ref": "#/components/schemas/role"
+                    }
+                  }
+                }
+              }
+            }
+          },          
+          "responses": {
+            "200": {
+              "description": "User updated",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "result": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "400": {
+              "description": "No user found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "Invalid id (string)": {
+                      "value": {
+                        "error": "Id must be a number"
+                      }
+                    },
+                    "Invalid id (negative number": {
+                      "value": {
+                        "error": "Id must be a positive number"
+                      }
+                    },
+                    "Invalid id (entered id is 0)": {
+                      "value": {
+                        "error": "No user found with id {id}"
+                      }
+                    },
+                    "Invalid id (no user exists with id)": {
+                      "value": {
+                        "error": "No user found with id {id}"
+                      }
+                    },
+                    "Invalid id (user with id is deleted)": {
+                      "value": {
+                        "error": "No user found with id {id}"
+                      }
+                    },
+                    "Nothing to update": {
+                      "value": {
+                        "error": "Nothing to update"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Users operations"
+          ],
+          "description": "Delete user with id",
+          "security": [{ 
+            "bearerAuth": [] 
+            }],
+          "responses": {
+            "204": {
+              "description": "User deleted",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "result": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "400": {
+              "description": "No user found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "Invalid id (string)": {
+                      "value": {
+                        "error": "Id must be a number"
+                      }
+                    },
+                    "Invalid id (negative number": {
+                      "value": {
+                        "error": "Id must be a positive number"
+                      }
+                    },
+                    "Invalid id (entered id is 0)": {
+                      "value": {
+                        "error": "No user found with id {id}"
+                      }
+                    },
+                    "Invalid id (no user exists with id)": {
+                      "value": {
+                        "error": "No user found with id {id}"
+                      }
+                    },
+                    "Invalid id (user with id is deleted)": {
+                      "value": {
+                        "error": "No user found with id {id}"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        }
+      },
+       "/courses": {
+        "get": {
+          "tags": [
+            "Courses operations"
+          ],
+          "description": "Get list of all courses",
+          "security": [{ 
+            "bearerAuth": [] 
+            }],
+          "responses": {
+            "200": {
+              "description": "List of courses",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "courses": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/course"
+                        }
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Courses operations"
+          ],
+          "description": "Create new course",
+          "security": [{ 
+            "bearerAuth": [] 
+            }],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "$ref": "#/components/schemas/name"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },          
+          "responses": {
+            "201": {
+              "description": "Course created",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "$ref": "#/components/schemas/id"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "400": {
+              "description": "Required data is missing",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "No name": {
+                      "value": {
+                        "error": "Name is required"
+                      }
+                    },
+                    "Invalid name (array)": {
+                      "value": {
+                        "error": "Inserted value(s) cannot be an array"
+                      }
+                    },
+                    "Invalid name (empty string)": {
+                      "value": {
+                        "error": "Name cannot be an empty string"
+                      }
+                    },
+                    "Invalid name (includes number or symbols)": {
+                      "value": {
+                        "error": "Name can only contain Estonian letters"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        }
+      },
+      "/courses/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Course id",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "get": {
+          "tags": [
+            "Courses operations"
+          ],
+          "description": "Get course with selected id",
+          "security": [{ 
+            "bearerAuth": [] 
+            }],
+          "responses": {
+            "200": {
+              "description": "Course information",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "course": {
+                        "$ref": "#/components/schemas/course"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "400": {
+              "description": "No course found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "Invalid id (string)": {
+                      "value": {
+                        "error": "Id must be a number"
+                      }
+                    },
+                    "Invalid id (negative number": {
+                      "value": {
+                        "error": "Id must be a positive number"
+                      }
+                    },
+                    "Invalid id (entered id is 0)": {
+                      "value": {
+                        "error": "No course found with id {id}"
+                      }
+                    },
+                    "Invalid id (no course exists with id)": {
+                      "value": {
+                        "error": "No course found with id {id}"
+                      }
+                    },
+                    "Invalid id (course with id is deleted)": {
+                      "value": {
+                        "error": "No course found with id {id}"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "Courses operations"
+          ],
+          "description": "Update course with id",
+          "security": [{ 
+            "bearerAuth": [] 
+            }],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "firstName": {
+                      "$ref": "#/components/schemas/name"
+                    }
+                  }
+                }
+              }
+            }
+          },          
+          "responses": {
+            "200": {
+              "description": "Course updated",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "result": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "400": {
+              "description": "No course found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "Invalid id (string)": {
+                      "value": {
+                        "error": "Id must be a number"
+                      }
+                    },
+                    "Invalid id (negative number": {
+                      "value": {
+                        "error": "Id must be a positive number"
+                      }
+                    },
+                    "Invalid id (entered id is 0)": {
+                      "value": {
+                        "error": "No course found with id {id}"
+                      }
+                    },
+                    "Invalid id (no user exists with id)": {
+                      "value": {
+                        "error": "No course found with id {id}"
+                      }
+                    },
+                    "Invalid id (user with id is deleted)": {
+                      "value": {
+                        "error": "No course found with id {id}"
+                      }
+                    },
+                    "Nothing to update": {
+                      "value": {
+                        "error": "Nothing to update"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Courses operations"
+          ],
+          "description": "Delete course with id",
+          "security": [{ 
+            "bearerAuth": [] 
+            }],
+          "responses": {
+            "204": {
+              "description": "Course deleted",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "result": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "400": {
+              "description": "No course found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "Invalid id (string)": {
+                      "value": {
+                        "error": "Id must be a number"
+                      }
+                    },
+                    "Invalid id (negative number": {
+                      "value": {
+                        "error": "Id must be a positive number"
+                      }
+                    },
+                    "Invalid id (entered id is 0)": {
+                      "value": {
+                        "error": "No course found with id {id}"
+                      }
+                    },
+                    "Invalid id (no user exists with id)": {
+                      "value": {
+                        "error": "No course found with id {id}"
+                      }
+                    },
+                    "Invalid id (user with id is deleted)": {
+                      "value": {
+                        "error": "No course found with id {id}"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        }
+      },
+      "/teachers": {
+        "get": {
+          "tags": [
+            "Teachers operations"
+          ],
+          "description": "Get list of all teachers",
+          "security": [{ 
+            "bearerAuth": [] 
+            }],
+          "responses": {
+            "200": {
+              "description": "List of teachers",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "teachers": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/teacher"
+                        }
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Teachers operations"
+          ],
+          "description": "Create new teacher",
+          "security": [{ 
+            "bearerAuth": [] 
+            }],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "$ref": "#/components/schemas/name"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },          
+          "responses": {
+            "201": {
+              "description": "Teacher created",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "$ref": "#/components/schemas/id"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "400": {
+              "description": "Required data is missing",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "No name": {
+                      "value": {
+                        "error": "Name is required"
+                      }
+                    },
+                    "Invalid name (array)": {
+                      "value": {
+                        "error": "Inserted value(s) cannot be an array"
+                      }
+                    },
+                    "Invalid name (empty string)": {
+                      "value": {
+                        "error": "Name cannot be an empty string"
+                      }
+                    },
+                    "Invalid name (includes number or symbols)": {
+                      "value": {
+                        "error": "Name can only contain Estonian letters"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        }
+      },
+      "/teachers/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Teacher id",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "get": {
+          "tags": [
+            "Teachers operations"
+          ],
+          "description": "Get teacher with selected id",
+          "security": [{ 
+            "bearerAuth": [] 
+            }],
+          "responses": {
+            "200": {
+              "description": "Teacher information",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "teacher": {
+                        "$ref": "#/components/schemas/teacher"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "400": {
+              "description": "No teacher found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "Invalid id (string)": {
+                      "value": {
+                        "error": "Id must be a number"
+                      }
+                    },
+                    "Invalid id (negative number": {
+                      "value": {
+                        "error": "Id must be a positive number"
+                      }
+                    },
+                    "Invalid id (entered id is 0)": {
+                      "value": {
+                        "error": "No teacher found with id {id}"
+                      }
+                    },
+                    "Invalid id (no teacher exists with id)": {
+                      "value": {
+                        "error": "No teacher found with id {id}"
+                      }
+                    },
+                    "Invalid id (teacher with id is deleted)": {
+                      "value": {
+                        "error": "No teacher found with id {id}"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "Teachers operations"
+          ],
+          "description": "Update teacher with id",
+          "security": [{ 
+            "bearerAuth": [] 
+            }],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "firstName": {
+                      "$ref": "#/components/schemas/name"
+                    }
+                  }
+                }
+              }
+            }
+          },          
+          "responses": {
+            "200": {
+              "description": "Teacher updated",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "result": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "400": {
+              "description": "No teacher found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "Invalid id (string)": {
+                      "value": {
+                        "error": "Id must be a number"
+                      }
+                    },
+                    "Invalid id (negative number": {
+                      "value": {
+                        "error": "Id must be a positive number"
+                      }
+                    },
+                    "Invalid id (entered id is 0)": {
+                      "value": {
+                        "error": "No teacher found with id {id}"
+                      }
+                    },
+                    "Invalid id (no user exists with id)": {
+                      "value": {
+                        "error": "No teacher found with id {id}"
+                      }
+                    },
+                    "Invalid id (user with id is deleted)": {
+                      "value": {
+                        "error": "No teacher found with id {id}"
+                      }
+                    },
+                    "Nothing to update": {
+                      "value": {
+                        "error": "Nothing to update"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Teachers operations"
+          ],
+          "description": "Delete teacher with id",
+          "security": [{ 
+            "bearerAuth": [] 
+            }],
+          "responses": {
+            "204": {
+              "description": "Teacher deleted",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "result": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "400": {
+              "description": "No teacher found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "Invalid id (string)": {
+                      "value": {
+                        "error": "Id must be a number"
+                      }
+                    },
+                    "Invalid id (negative number": {
+                      "value": {
+                        "error": "Id must be a positive number"
+                      }
+                    },
+                    "Invalid id (entered id is 0)": {
+                      "value": {
+                        "error": "No teacher found with id {id}"
+                      }
+                    },
+                    "Invalid id (no user exists with id)": {
+                      "value": {
+                        "error": "No teacher found with id {id}"
+                      }
+                    },
+                    "Invalid id (user with id is deleted)": {
+                      "value": {
+                        "error": "No teacher found with id {id}"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        }
+      },
+      "/subjects": {
+        "get": {
+          "tags": [
+            "Subjects operations"
+          ],
+          "description": "Get list of all subjects",
+          "security": [{ 
+            "bearerAuth": [] 
+            }],
+          "responses": {
+            "200": {
+              "description": "List of subjects",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "subjects": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/subject"
+                        }
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Subjects operations"
+          ],
+          "description": "Create new subject",
+          "security": [{ 
+            "bearerAuth": [] 
+            }],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "$ref": "#/components/schemas/name"
+                    },
+                    "EAP": {
+                      "$ref": "#/components/schemas/EAP"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },          
+          "responses": {
+            "201": {
+              "description": "Subject created",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "$ref": "#/components/schemas/id"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "400": {
+              "description": "Required data is missing",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "No name": {
+                      "value": {
+                        "error": "Name is required"
+                      }
+                    },
+                    "No EAP": {
+                      "value": {
+                        "error": "EAP is required"
+                      }
+                    },
+                    "Invalid name (array)": {
+                      "value": {
+                        "error": "Inserted value(s) cannot be an array"
+                      }
+                    },
+                    "Invalid name (empty string)": {
+                      "value": {
+                        "error": "Name cannot be an empty string"
+                      }
+                    },
+                    "Invalid name (includes symbols)": {
+                      "value": {
+                        "error": "Name can only contain Estonian letters and numbers"
+                      }
+                    },
+                    "Invalid EAP (negative number)": {
+                      "value": {
+                        "error": "EAP must be a positive number"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        }
+      },
+      "/subjects/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Subject id",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "get": {
+          "tags": [
+            "Subjects operations"
+          ],
+          "description": "Get subject with selected id",
+          "security": [{ 
+            "bearerAuth": [] 
+            }],
+          "responses": {
+            "200": {
+              "description": "Subject information",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "subject": {
+                        "$ref": "#/components/schemas/subject"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "400": {
+              "description": "No subject found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "Invalid id (string)": {
+                      "value": {
+                        "error": "Id must be a number"
+                      }
+                    },
+                    "Invalid id (negative number": {
+                      "value": {
+                        "error": "Id must be a positive number"
+                      }
+                    },
+                    "Invalid id (entered id is 0)": {
+                      "value": {
+                        "error": "No subject found with id {id}"
+                      }
+                    },
+                    "Invalid id (no subject exists with id)": {
+                      "value": {
+                        "error": "No subject found with id {id}"
+                      }
+                    },
+                    "Invalid id (subject with id is deleted)": {
+                      "value": {
+                        "error": "No subject found with id {id}"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "Subjects operations"
+          ],
+          "description": "Update subject with id",
+          "security": [{ 
+            "bearerAuth": [] 
+            }],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "firstName": {
+                      "$ref": "#/components/schemas/name"
+                    }
+                  }
+                }
+              }
+            }
+          },          
+          "responses": {
+            "200": {
+              "description": "Subject updated",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "result": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "400": {
+              "description": "No subject found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "Invalid id (string)": {
+                      "value": {
+                        "error": "Id must be a number"
+                      }
+                    },
+                    "Invalid id (negative number": {
+                      "value": {
+                        "error": "Id must be a positive number"
+                      }
+                    },
+                    "Invalid id (entered id is 0)": {
+                      "value": {
+                        "error": "No subject found with id {id}"
+                      }
+                    },
+                    "Invalid id (no user exists with id)": {
+                      "value": {
+                        "error": "No subject found with id {id}"
+                      }
+                    },
+                    "Invalid id (user with id is deleted)": {
+                      "value": {
+                        "error": "No subject found with id {id}"
+                      }
+                    },
+                    "Nothing to update": {
+                      "value": {
+                        "error": "Nothing to update"
+                      }
+                    },
+                    "Invalid name (array)": {
+                      "value": {
+                        "error": "Inserted value(s) cannot be an array"
+                      }
+                    },
+                    "Invalid name (empty string)": {
+                      "value": {
+                        "error": "Name cannot be an empty string"
+                      }
+                    },
+                    "Invalid name (includes symbols)": {
+                      "value": {
+                        "error": "Name can only contain Estonian letters and numbers"
+                      }
+                    },
+                    "Invalid EAP (negative number)": {
+                      "value": {
+                        "error": "EAP must be a positive number"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Subjects operations"
+          ],
+          "description": "Delete subject with id",
+          "security": [{ 
+            "bearerAuth": [] 
+            }],
+          "responses": {
+            "204": {
+              "description": "Subject deleted",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "result": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "400": {
+              "description": "No subject found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "Invalid id (string)": {
+                      "value": {
+                        "error": "Id must be a number"
+                      }
+                    },
+                    "Invalid id (negative number": {
+                      "value": {
+                        "error": "Id must be a positive number"
+                      }
+                    },
+                    "Invalid id (entered id is 0)": {
+                      "value": {
+                        "error": "No subject found with id {id}"
+                      }
+                    },
+                    "Invalid id (no user exists with id)": {
+                      "value": {
+                        "error": "No subject found with id {id}"
+                      }
+                    },
+                    "Invalid id (user with id is deleted)": {
+                      "value": {
+                        "error": "No subject found with id {id}"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        }
+      },
+      "/rooms": {
+        "get": {
+          "tags": [
+            "Rooms operations"
+          ],
+          "description": "Get list of all rooms",
+          "security": [{ 
+            "bearerAuth": [] 
+            }],
+          "responses": {
+            "200": {
+              "description": "List of rooms",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "rooms": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/room"
+                        }
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Rooms operations"
+          ],
+          "description": "Create new room",
+          "security": [{ 
+            "bearerAuth": [] 
+            }],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "$ref": "#/components/schemas/name"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },          
+          "responses": {
+            "201": {
+              "description": "Room created",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "$ref": "#/components/schemas/id"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "400": {
+              "description": "Required data is missing",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "No name": {
+                      "value": {
+                        "error": "Name is required"
+                      }
+                    },
+                    "Invalid name (array)": {
+                      "value": {
+                        "error": "Inserted value(s) cannot be an array"
+                      }
+                    },
+                    "Invalid name (empty string)": {
+                      "value": {
+                        "error": "Name cannot be an empty string"
+                      }
+                    },
+                    "Invalid name (includes number or symbols)": {
+                      "value": {
+                        "error": "Name can only contain Estonian letters"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        }
+      },
+      "/rooms/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Room id",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "get": {
+          "tags": [
+            "Rooms operations"
+          ],
+          "description": "Get room with selected id",
+          "security": [{ 
+            "bearerAuth": [] 
+            }],
+          "responses": {
+            "200": {
+              "description": "Room information",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "room": {
+                        "$ref": "#/components/schemas/room"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "400": {
+              "description": "No room found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "Invalid id (string)": {
+                      "value": {
+                        "error": "Id must be a number"
+                      }
+                    },
+                    "Invalid id (negative number": {
+                      "value": {
+                        "error": "Id must be a positive number"
+                      }
+                    },
+                    "Invalid id (entered id is 0)": {
+                      "value": {
+                        "error": "No room found with id {id}"
+                      }
+                    },
+                    "Invalid id (no room exists with id)": {
+                      "value": {
+                        "error": "No room found with id {id}"
+                      }
+                    },
+                    "Invalid id (room with id is deleted)": {
+                      "value": {
+                        "error": "No room found with id {id}"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "Rooms operations"
+          ],
+          "description": "Update room with id",
+          "security": [{ 
+            "bearerAuth": [] 
+            }],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "firstName": {
+                      "$ref": "#/components/schemas/name"
+                    }
+                  }
+                }
+              }
+            }
+          },          
+          "responses": {
+            "200": {
+              "description": "Room updated",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "result": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "400": {
+              "description": "No room found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "Invalid id (string)": {
+                      "value": {
+                        "error": "Id must be a number"
+                      }
+                    },
+                    "Invalid id (negative number": {
+                      "value": {
+                        "error": "Id must be a positive number"
+                      }
+                    },
+                    "Invalid id (entered id is 0)": {
+                      "value": {
+                        "error": "No room found with id {id}"
+                      }
+                    },
+                    "Invalid id (no user exists with id)": {
+                      "value": {
+                        "error": "No room found with id {id}"
+                      }
+                    },
+                    "Invalid id (user with id is deleted)": {
+                      "value": {
+                        "error": "No room found with id {id}"
+                      }
+                    },
+                    "Nothing to update": {
+                      "value": {
+                        "error": "Nothing to update"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Rooms operations"
+          ],
+          "description": "Delete room with id",
+          "security": [{ 
+            "bearerAuth": [] 
+            }],
+          "responses": {
+            "204": {
+              "description": "Room deleted",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "result": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "400": {
+              "description": "No room found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "Invalid id (string)": {
+                      "value": {
+                        "error": "Id must be a number"
+                      }
+                    },
+                    "Invalid id (negative number": {
+                      "value": {
+                        "error": "Id must be a positive number"
+                      }
+                    },
+                    "Invalid id (entered id is 0)": {
+                      "value": {
+                        "error": "No room found with id {id}"
+                      }
+                    },
+                    "Invalid id (no user exists with id)": {
+                      "value": {
+                        "error": "No room found with id {id}"
+                      }
+                    },
+                    "Invalid id (user with id is deleted)": {
+                      "value": {
+                        "error": "No room found with id {id}"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        }
+      },
+      "/lessons": {
+        "get": {
+          "tags": [
+            "Lessons operations"
+          ],
+          "description": "Get list of all lessons",
+          "security": [{ 
+            "bearerAuth": [] 
+            }],
+          "responses": {
+            "200": {
+              "description": "List of lessons",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "lessons": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/lesson"
+                        }
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Lessons operations"
+          ],
+          "description": "Create new lesson",
+          "security": [{ 
+            "bearerAuth": [] 
+            }],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "startTime": {
+                      "$ref": "#/components/schemas/startTime"
+                    },
+                    "endTime": {
+                      "$ref": "#/components/schemas/endTime"
+                    },
+                    "duration": {
+                      "$ref": "#/components/schemas/duration"
+                    },
+                    "courseId": {
+                      "$ref": "#/components/schemas/courseId"
+                    },
+                    "subjectId": {
+                      "$ref": "#/components/schemas/subjectId"
+                    },
+                    "teacherId": {
+                      "$ref": "#/components/schemas/teacherId"
+                    },
+                    "roomId": {
+                      "$ref": "#/components/schemas/roomId"
+                    },
+                    "comment": {
+                      "$ref": "#/components/schemas/comment"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },          
+          "responses": {
+            "201": {
+              "description": "Lesson created",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "$ref": "#/components/schemas/id"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "400": {
+              "description": "Required data is missing",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "No startTime": {
+                      "value": {
+                        "error": "Start time is required"
+                      }
+                    },
+                    "No endTime": {
+                      "value": {
+                        "error": "End time is required"
+                      }
+                    },
+                    "No duration": {
+                      "value": {
+                        "error": "Duration is required"
+                      }
+                    },
+                    "No courseId": {
+                      "value": {
+                        "error": "Course ID is required"
+                      }
+                    },
+                    "No subjectId": {
+                      "value": {
+                        "error": "Subject ID is required"
+                      }
+                    },
+                    "No teacherId": {
+                      "value": {
+                        "error": "Teacher ID is required"
+                      }
+                    },
+                    "No roomId": {
+                      "value": {
+                        "error": "Room ID is required"
+                      }
+                    },
+                    "Invalid value (array) for startTime, endTime or comment": {
+                      "value": {
+                        "error": "Inserted value(s) cannot be an array"
+                      }
+                    },
+                    "Invalid value (zero) for any parameter": {
+                      "value": {
+                        "error": "Inserted value(s) cannot be 0"
+                      }
+                    },
+                    "Invalid format for startTime": {
+                      "value": {
+                        "error": "Start time is incorrect, recommended format is YYYY-MM-DD HH:MM:SS"
+                      }
+                    },
+                    "Invalid format for endTime": {
+                      "value": {
+                        "error": "End time is incorrect, recommended format is YYYY-MM-DD HH:MM:SS"
+                      }
+                    },
+                    "Invalid duration (not a positive number)": {
+                      "value": {
+                        "error": "Duration must be a positive number"
+                      }
+                    },
+                    "Invalid courseId (not a positive number)": {
+                      "value": {
+                        "error": "Course ID must be a positive number"
+                      }
+                    },
+                    "Invalid subjectId (not a positive number)": {
+                      "value": {
+                        "error": "Subject ID must be a positive number"
+                      }
+                    },
+                    "Invalid teacherId (not a positive number)": {
+                      "value": {
+                        "error": "Teacher ID must be a positive number"
+                      }
+                    },
+                    "Invalid roomId (not a positive number)": {
+                      "value": {
+                        "error": "Room ID must be a positive number"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        }
+      },
+      "/lessons/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Lesson id",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "get": {
+          "tags": [
+            "Lessons operations"
+          ],
+          "description": "Get lesson with selected id",
+          "security": [{ 
+            "bearerAuth": [] 
+            }],
+          "responses": {
+            "200": {
+              "description": "Lesson information",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "lesson": {
+                        "$ref": "#/components/schemas/lesson"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "400": {
+              "description": "No lesson found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "Invalid id (string)": {
+                      "value": {
+                        "error": "Id must be a number"
+                      }
+                    },
+                    "Invalid id (negative number": {
+                      "value": {
+                        "error": "Id must be a positive number"
+                      }
+                    },
+                    "Invalid id (entered id is 0)": {
+                      "value": {
+                        "error": "No lesson found with id {id}"
+                      }
+                    },
+                    "Invalid id (no lesson exists with id)": {
+                      "value": {
+                        "error": "No lesson found with id {id}"
+                      }
+                    },
+                    "Invalid id (lesson with id is deleted)": {
+                      "value": {
+                        "error": "No lesson found with id {id}"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "Lessons operations"
+          ],
+          "description": "Update lesson with id",
+          "security": [{ 
+            "bearerAuth": [] 
+            }],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "startTime": {
+                      "$ref": "#/components/schemas/startTime"
+                    },
+                    "endTime": {
+                      "$ref": "#/components/schemas/endTime"
+                    },
+                    "duration": {
+                      "$ref": "#/components/schemas/duration"
+                    },
+                    "courseId": {
+                      "$ref": "#/components/schemas/courseId"
+                    },
+                    "subjectId": {
+                      "$ref": "#/components/schemas/subjectId"
+                    },
+                    "teacherId": {
+                      "$ref": "#/components/schemas/teacherId"
+                    },
+                    "roomId": {
+                      "$ref": "#/components/schemas/roomId"
+                    },
+                    "comment": {
+                      "$ref": "#/components/schemas/comment"
+                    }
+                  }
+                }
+              }
+            }
+          },          
+          "responses": {
+            "200": {
+              "description": "Lesson updated",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "result": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "400": {
+              "description": "No lesson found or invalid input",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "Invalid id (string)": {
+                      "value": {
+                        "error": "Id must be a number"
+                      }
+                    },
+                    "Invalid id (negative number": {
+                      "value": {
+                        "error": "Id must be a positive number"
+                      }
+                    },
+                    "Invalid id (entered id is 0)": {
+                      "value": {
+                        "error": "No lesson found with id {id}"
+                      }
+                    },
+                    "Invalid id (no user exists with id)": {
+                      "value": {
+                        "error": "No lesson found with id {id}"
+                      }
+                    },
+                    "Invalid id (user with id is deleted)": {
+                      "value": {
+                        "error": "No lesson found with id {id}"
+                      }
+                    },
+                    "Nothing to update": {
+                      "value": {
+                        "error": "Nothing to update"
+                      }
+                    },
+                    "Invalid value (array) for startTime, endTime or comment": {
+                      "value": {
+                        "error": "Inserted value(s) cannot be an array"
+                      }
+                    },
+                    "Invalid value (zero) for any parameter": {
+                      "value": {
+                        "error": "Inserted value(s) cannot be 0"
+                      }
+                    },
+                    "Invalid format for startTime": {
+                      "value": {
+                        "error": "Start time is incorrect, recommended format is YYYY-MM-DD HH:MM:SS"
+                      }
+                    },
+                    "Invalid format for endTime": {
+                      "value": {
+                        "error": "End time is incorrect, recommended format is YYYY-MM-DD HH:MM:SS"
+                      }
+                    },
+                    "Invalid duration (not a positive number)": {
+                      "value": {
+                        "error": "Duration must be a positive number"
+                      }
+                    },
+                    "Invalid courseId (not a positive number)": {
+                      "value": {
+                        "error": "Course ID must be a positive number"
+                      }
+                    },
+                    "Invalid subjectId (not a positive number)": {
+                      "value": {
+                        "error": "Subject ID must be a positive number"
+                      }
+                    },
+                    "Invalid teacherId (not a positive number)": {
+                      "value": {
+                        "error": "Teacher ID must be a positive number"
+                      }
+                    },
+                    "Invalid roomId (not a positive number)": {
+                      "value": {
+                        "error": "Room ID must be a positive number"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Lessons operations"
+          ],
+          "description": "Delete lesson with id",
+          "security": [{ 
+            "bearerAuth": [] 
+            }],
+          "responses": {
+            "204": {
+              "description": "Lesson deleted",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "result": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "400": {
+              "description": "No lesson found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "Invalid id (string)": {
+                      "value": {
+                        "error": "Id must be a number"
+                      }
+                    },
+                    "Invalid id (negative number": {
+                      "value": {
+                        "error": "Id must be a positive number"
+                      }
+                    },
+                    "Invalid id (entered id is 0)": {
+                      "value": {
+                        "error": "No lesson found with id {id}"
+                      }
+                    },
+                    "Invalid id (no user exists with id)": {
+                      "value": {
+                        "error": "No lesson found with id {id}"
+                      }
+                    },
+                    "Invalid id (user with id is deleted)": {
+                      "value": {
+                        "error": "No lesson found with id {id}"
+                      }
+                    }
+                  }
+                }
+              }            
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            }
+          }
+        }
+      }
+    }
+  }

@@ -1,13 +1,9 @@
 
--- -----------------------------------------------------
--- Schema schedule
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `schedule` DEFAULT CHARACTER SET utf8 ;
+
+CREATE SCHEMA IF NOT EXISTS `schedule`;
 USE `schedule` ;
 
--- -----------------------------------------------------
--- Table `schedule`.`users`
--- -----------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS `schedule`.`users` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `firstName` VARCHAR(45) NOT NULL,
@@ -22,9 +18,6 @@ CREATE TABLE IF NOT EXISTS `schedule`.`users` (
   PRIMARY KEY (`id`));
 
 
--- -----------------------------------------------------
--- Table `schedule`.`courses`
--- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `schedule`.`courses` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `createdBy` INT NOT NULL,
@@ -41,9 +34,6 @@ CREATE TABLE IF NOT EXISTS `schedule`.`courses` (
     ON UPDATE NO ACTION);
 
 
--- -----------------------------------------------------
--- Table `schedule`.`teachers`
--- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `schedule`.`teachers` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `createdBy` INT NOT NULL,
@@ -60,9 +50,6 @@ CREATE TABLE IF NOT EXISTS `schedule`.`teachers` (
     ON UPDATE NO ACTION);
 
 
--- -----------------------------------------------------
--- Table `schedule`.`rooms`
--- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `schedule`.`rooms` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `createdBy` INT NOT NULL,
@@ -79,9 +66,6 @@ CREATE TABLE IF NOT EXISTS `schedule`.`rooms` (
     ON UPDATE NO ACTION);
 
 
--- -----------------------------------------------------
--- Table `schedule`.`subjects`
--- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `schedule`.`subjects` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `createdBy` INT NOT NULL,
@@ -99,9 +83,6 @@ CREATE TABLE IF NOT EXISTS `schedule`.`subjects` (
     ON UPDATE NO ACTION);
 
 
--- -----------------------------------------------------
--- Table `schedule`.`lessons`
--- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `schedule`.`lessons` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `createdBy` INT NOT NULL,
@@ -149,11 +130,6 @@ CREATE TABLE IF NOT EXISTS `schedule`.`lessons` (
     ON UPDATE NO ACTION);
 
 
-
-
--- -----------------------------------------------------
--- Insert SEED
--- -----------------------------------------------------
 
 USE `schedule`;
 
