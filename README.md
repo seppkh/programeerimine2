@@ -17,6 +17,7 @@ Use this API to find or update Lessons and/or single Courses, Subjects, Teachers
 * Go to http://localhost:3006/api-docs/
 
 
+
 # API documentation in github:
 
 ## Open Endpoints
@@ -33,7 +34,7 @@ Open endpoints require no Authentication.
 
 Closed endpoints require Authentication.
 
-`POST`, `PUT` and `DELETE` endpoints are available only for Admins. 
+`POST`, `PUT` and `DELETE` endpoints are available only for Admins.
 `GET /users` is also available only for Admins.
 
 
