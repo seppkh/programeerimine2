@@ -3,7 +3,7 @@ import { dbCourse } from './components/courses/interface';
 import { dbTeacher } from './components/teachers/interface';
 import { dbSubject } from './components/subjects/interface';
 import { dbRoom } from './components/rooms/interface';
-import { Lesson } from './components/lessons/interface';
+import { dbLesson } from './components/lessons/interface';
 
 /**
   * Database interface
@@ -14,7 +14,7 @@ interface Db {
   subjects: dbSubject[];
   teachers: dbTeacher[];
   rooms: dbRoom[];
-  lessons: Lesson[];
+  lessons: dbLesson[];
 }
 
 /**

@@ -2,13 +2,51 @@
 
 Use this API to find or update Lessons and/or single Courses, Subjects, Teachers or Rooms.
 
-All single objects consist of a name. For Subjects, EAP value is also included.
+## Setup in local server
 
-Lesson's information consists of start_time, end_time, course_id, subject_id, teacher_id, room_id, comment.
+* git clone https://github.com/seppkh/programmeerimine2.git
+* cd programmeerimine2
+* npm install
+* add database structure and dummy data to local database using ./docs/modelAndSeed.sql
+* create config.ts file with local database connection info
+* npm start
+* Go to http://localhost:3006/ping
+
+## API documentation in Swagger:
+* Start project - npm start
+* Go to http://localhost:3006/api-docs/
+
+
+# API documentation in github:
 
 ## Open Endpoints
 
 Open endpoints require no Authentication.
+
+| Action | Endpoint |
+| ---- | ---- |
+| Login | `POST /login` |
+| Create a user | `POST /users` |
+
+
+## Closed Endpoints
+
+Closed endpoints require Authentication.
+
+`POST`, `PUT` and `DELETE` endpoints are available only for Admins. 
+`GET /users` is also available only for Admins.
+
+
+## Users related
+Endpoints for viewing and manipulating Users.
+
+| Action | Endpoint |
+| ---- | ---- |
+| Show all users | `GET /users` |
+| Show a selected user | `GET /users/:id` |
+| Update a selected user | `PUT /users/:id` |
+| Delete a selected user | `DELETE /users/:id` |
+
 
 ## Courses related
 Endpoints for viewing and manipulating Courses.
@@ -27,10 +65,16 @@ Endpoints for viewing and manipulating Courses.
 `GET /courses/1`
 ```json
 {
-    "course": {
-        "id": 1,
-        "name": "Liikluskorraldus1"
-    }
+    "course": [
+        {
+            "id": 1,
+            "name": "Rakendusinformaatika 1",
+            "dateCreated": "2022-01-04T17:47:10.000Z",
+            "dateUpdated": null,
+            "dateDeleted": null,
+            "createdBy": "admin@admin.ee"
+        }
+    ]
 }
 ```
 
@@ -52,11 +96,17 @@ Endpoints for viewing and manipulating Subjects.
 `GET /subjects/1`
 ```json
 {
-    "subject": {
-        "id": 1,
-        "name": "Erialane inglise keel",
-        "EAP": 6
-    }
+    "subject": [
+        {
+            "id": 1,
+            "name": "Programmeerimine 2",
+            "EAP": 3,
+            "dateCreated": "2022-01-04T17:47:10.000Z",
+            "dateUpdated": null,
+            "dateDeleted": null,
+            "createdBy": "admin@admin.ee"
+        }
+    ]
 }
 ```
 
@@ -78,10 +128,16 @@ Endpoints for viewing and manipulating Teachers.
 `GET /teachers/1`
 ```json
 {
-    "teacher": {
-        "id": 1,
-        "name": "Mari Kuli"
-    }
+    "teacher": [
+        {
+            "id": 1,
+            "name": "Martti Raavel",
+            "dateCreated": "2022-01-04T17:47:10.000Z",
+            "dateUpdated": null,
+            "dateDeleted": null,
+            "createdBy": "admin@admin.ee"
+        }
+    ]
 }
 ```
 
@@ -103,10 +159,16 @@ Endpoints for viewing and manipulating Rooms.
 `GET /rooms/1`
 ```json
 {
-    "room": {
-        "id": 1,
-        "name": "Arvutiklass 203"
-    }
+    "room": [
+        {
+            "id": 1,
+            "name": "Arvutilabor 203",
+            "dateCreated": "2022-01-04T17:47:10.000Z",
+            "dateUpdated": null,
+            "dateDeleted": null,
+            "createdBy": "admin@admin.ee"
+        }
+    ]
 }
 ```
 
@@ -121,6 +183,12 @@ Endpoints for viewing and manipulating Lessons.
 | Add a lesson | `POST /lessons` |
 | Update a selected lesson | `PUT /lessons/:id` |
 | Delete a selected lesson | `DELETE /lessons/:id` |
+| Show lessons with a selected course | `GET /lessons/course/:id` |
+| Show lessons with a selected teacher | `GET /lessons/teacher/:id` |
+| Show lessons with a selected subject | `GET /lessons/subject/:id` |
+| Show lessons with a selected room | `GET /lessons/room/:id` |
+
+
 
 
 **Data example**
@@ -128,27 +196,22 @@ Endpoints for viewing and manipulating Lessons.
 `GET /lessons/1`
 ```json
 {
-    "lesson": 1,
-    "start_time": "2021-09-30 10:00",
-    "end_time": "2021-09-30 13:15",
-    "duration": 4,
-    "course": {
-        "id": 2,
-        "name": "Rakendusinformaatika2"
-    },
-    "subject": {
-        "id": 1,
-        "name": "Erialane inglise keel",
-        "EAP": 6
-    },
-    "teacher": {
-        "id": 1,
-        "name": "Mari Kuli"
-    },
-    "room": {
-        "id": 2,
-        "name": "Auditoorium 307"
-    },
-    "comment": "Eksam: suuline ja kirjalik osa"
+    "lesson": [
+        {
+            "id": 1,
+            "startTime": "2021-12-16T08:00:00.000Z",
+            "endTime": "2021-12-16T11:15:00.000Z",
+            "duration": 4,
+            "course": "Rakendusinformaatika 2",
+            "subject": "Programmeerimine 2",
+            "teacher": "Martti Raavel",
+            "room": "Auditoorium 207",
+            "comment": null,
+            "dateCreated": "2022-01-04T17:47:10.000Z",
+            "dateUpdated": null,
+            "dateDeleted": null,
+            "createdBy": "admin@admin.ee"
+        }
+    ]
 }
 ```
