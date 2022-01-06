@@ -1,8 +1,5 @@
-
-
-CREATE SCHEMA IF NOT EXISTS `schedule`;
-USE `schedule` ;
-
+CREATE SCHEMA IF NOT EXISTS schedule;
+USE schedule ;
 
 CREATE TABLE IF NOT EXISTS `schedule`.`users` (
   `id` INT NOT NULL AUTO_INCREMENT,
