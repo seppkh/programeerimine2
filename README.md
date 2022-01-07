@@ -2,13 +2,13 @@
 
 Use this API to find or update Lessons and/or single Courses, Subjects, Teachers or Rooms.
 
-## Setup in local server
+## Setup in Docker container
 
 * git clone https://github.com/seppkh/programmeerimine2.git
 * cd programmeerimine2
 * npm install
 * Create config.ts and .env files with database connection info
-* Create docker repository – npm run start:docker
+* Create docker container – npm run start:docker
 * Start project – npm start
 * Go to http://localhost:3006/ping
 * Close and remove docker repository – npm run stop:docker
