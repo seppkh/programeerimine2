@@ -7,10 +7,11 @@ Use this API to find or update Lessons and/or single Courses, Subjects, Teachers
 * git clone https://github.com/seppkh/programmeerimine2.git
 * cd programmeerimine2
 * npm install
-* add database structure and dummy data to local database using ./docs/modelAndSeed.sql
-* create config.ts file with local database connection info
-* npm start
+* Create config.ts and .env files with database connection info
+* Create docker repository – npm run start:docker
+* Start project – npm start
 * Go to http://localhost:3006/ping
+* Close and remove docker repository – npm run stop:docker
 
 ## API documentation in Swagger:
 * Start project - npm start
