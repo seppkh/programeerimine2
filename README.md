@@ -8,10 +8,10 @@ Use this API to find or update Lessons and/or single Courses, Subjects, Teachers
 * cd programmeerimine2
 * npm install
 * Create config.ts and .env files with database connection info
-* Create docker container – npm run start:docker
+* Create docker container – npm run docker:start
 * Start project – npm start
 * Go to http://localhost:3006/ping
-* Close and remove docker repository – npm run stop:docker
+* Close and remove docker repository – npm run docker:stop
 
 ## API documentation in Swagger:
 * Start project - npm start
